@@ -30,7 +30,6 @@ while True:
         cv2.circle(im0, (x, y), 15, (0, 255, 0), -1)
         cv2.putText(im0, f"{x},{y}", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     res1 = hands.process(rgb1)
-    
     if res1.multi_hand_landmarks:
         h = res1.multi_hand_landmarks[0]
         mp_d.draw_landmarks(im1, h, mp_h.HAND_CONNECTIONS)

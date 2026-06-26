@@ -4,6 +4,8 @@ import pyautogui
 import math
 import time
 import sys
+from mediapipe.tasks.python import vision
+from mediapipe.tasks import python
 
 cam_id = 0
 if len(sys.argv) > 1 and sys.argv[1].isdigit():
@@ -40,10 +42,10 @@ def dist2d(p1, p2):
 def dist3d(p1, p2):
     return math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2 + (p1.z - p2.z)**2)
 
-def is_ext(hand, tip, mcp):
-    w = hand.landmark[0]
-    t = hand.landmark[tip]
-    m = hand.landmark[mcp]
+def is_ext(hand_landmarks, tip, mcp):
+    w = hand_landmarks[0]
+    t = hand_landmarks[tip]
+    m = hand_landmarks[mcp]
     return dist3d(t, w) > dist3d(m, w) * 1.15
 
 def norm(val, v_min, v_max):
@@ -51,7 +53,7 @@ def norm(val, v_min, v_max):
     return (val - v_min) / (v_max - v_min)
 
 cap = cv2.VideoCapture(cam_id)
-ok, _ = cap.read()
+ok = cap.read()
 if not cap.isOpened() or not ok:
     fb = 1 if cam_id == 0 else 0
     cap.release()
@@ -64,13 +66,22 @@ if not cap.isOpened() or not ok:
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
-mp_h = mp.solutions.hands
-mp_d = mp.solutions.drawing_utils
-hands = mp_h.Hands(
-    max_num_hands=1,
-    min_detection_confidence=0.6,
-    min_tracking_confidence=0.6
+latest_result = None
+
+def tracking_callback(result: vision.HandLandmarkerResult, output_image: mp.Image, timestamp_ms: int):
+    global latest_result
+    latest_result = result
+
+base_options = python.BaseOptions(model_asset_path='hand_landmarker.task')
+options = vision.HandLandmarkerOptions(
+    base_options=base_options,
+    running_mode=vision.RunningMode.LIVE_STREAM,
+    num_hands=1,
+    min_hand_detection_confidence=0.6,
+    min_hand_presence_confidence=0.6,
+    result_callback=tracking_callback
 )
+detector = vision.HandLandmarker.create_from_options(options)
 
 w, h = pyautogui.size()
 
@@ -96,19 +107,21 @@ while True:
     frame = cv2.flip(frame, 1)
     fh, fw, _ = frame.shape
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    res = hands.process(rgb)
+    
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
+    detector.detect_async(mp_image, int(time.time() * 1000))
 
     act = "IDLE"
     pinch = "N/A"
     v = 0.0
     a = alpha
     acc = 1.0
+    if latest_result and latest_result.hand_landmarks:
+        hand = latest_result.hand_landmarks[0]  
+        for lm in hand:
+            cv2.circle(frame, (int(lm.x * fw), int(lm.y * fh)), 3, (0, 255, 255), -1)
 
-    if res.multi_hand_landmarks:
-        hand = res.multi_hand_landmarks[0]
-        mp_d.draw_landmarks(frame, hand, mp_h.HAND_CONNECTIONS)
-
-        tip = hand.landmark[8]
+        tip = hand[8]
         in_zone = x0 <= tip.x <= x1 and y0 <= tip.y <= y1
 
         if in_zone:
@@ -162,7 +175,7 @@ while True:
 
             cv2.circle(frame, (int(tip.x * fw), int(tip.y * fh)), 12, (0, 255, 0), -1)
 
-            idx_mid_d = dist2d(hand.landmark[8], hand.landmark[12])
+            idx_mid_d = dist2d(hand[8], hand[12])
             if idx and mid and not ring and not pink and idx_mid_d < left_th:
                 act = "SCROLL"
                 if not sc:
@@ -182,8 +195,8 @@ while True:
                 sc = False
 
             if not sc:
-                d_thumb_idx = dist2d(hand.landmark[4], hand.landmark[8])
-                d_thumb_mid = dist2d(hand.landmark[4], hand.landmark[12])
+                d_thumb_idx = dist2d(hand[4], hand[8])
+                d_thumb_mid = dist2d(hand[4], hand[12])
                 pinch = f"L:{d_thumb_idx:.3f}/{left_th:.3f} M:{d_thumb_mid:.3f}"
 
                 if not lp and d_thumb_idx < left_th:
@@ -237,7 +250,7 @@ while True:
             lp = False
 
     now = time.time()
-    fps = 1.0 / (now - t0)
+    fps = 1.0 / (now - t0) if (now - t0) > 0 else 0.0
     t0 = now
 
     cv2.rectangle(frame, (10, 10), (320, 210), (0, 128, 0), -1)
@@ -246,7 +259,6 @@ while True:
     ix0, ix1 = int(x0 * fw), int(x1 * fw)
     iy0, iy1 = int(y0 * fh), int(y1 * fh)
     cv2.rectangle(frame, (ix0, iy0), (ix1, iy1), (255, 255, 255), 2)
-
     cv2.putText(frame, "STATUS: ACTIVE", (20, 35), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
     cv2.putText(frame, f"ACTION: {act}", (20, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
     cv2.putText(frame, f"PINCH: {pinch}", (20, 85), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
@@ -255,15 +267,10 @@ while True:
     cv2.putText(frame, f"ACCEL: {acc:.2f}", (20, 160), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
     cv2.putText(frame, f"FPS: {fps:.1f}", (20, 185), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
 
-    if act == "LOCKED":
-        cv2.putText(frame, "LOCKED", (fw - 150, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
-
-    cv2.imshow("BetterDesk Gesture Control", frame)
-    if cv2.waitKey(1) & 0xFF == ord("q"):
+    cv2.imshow("BetterDesk - Gesture Control", frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-if lp:
-    if real_mouse:
-        pyautogui.mouseUp()
 cap.release()
 cv2.destroyAllWindows()
+detector.close()
