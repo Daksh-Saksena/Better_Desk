@@ -1,2 +1,12 @@
-deactivate
-conda activate roboflow_env
+ENH12864Z-1 VER3.0 (your numbering)
+Pin	Function
+1	+5V
+2	LCD_MOSI
+3	LCD_SCK
+4	LCD_CS0
+5	Encoder Button
+6	GND
+7	LCD_CS
+8	Encoder B
+9	Encoder A
+10	Buzzer
