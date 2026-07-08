@@ -27,7 +27,7 @@ act = True
 def wk():
     global bd
     s = requests.Session()
-    u = 'https://detect.roboflow.com/find-battery-ev2es/6'
+    u = 'https://detect.roboflow.com/find-battery-current/11'
     p = {'api_key': '6tPCOrKxxsO95lqJTqkg'}
     while act:
         if cf is not None:
