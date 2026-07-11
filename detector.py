@@ -1,90 +1,177 @@
-import cv2 as cv
-from mediapipe.tasks import python
-from mediapipe.tasks.python import vision
-import mediapipe as mp
-import sys
-import threading
-import base64
-import requests
+import cv2 as c
+import numpy as n
+from mediapipe.tasks import python as p
+from mediapipe.tasks.python import vision as v
+import mediapipe as m
+import sys as y
+import threading as t
+import base64 as b
+import requests as r
+import math
 
-c = cv.VideoCapture(0)
-if not c.isOpened():
-    sys.exit()
+try:
+    st = n.load("stereo.npz")
+    p0 = st["P0"]
+    p1 = st["P1"]
+except:
+    y.exit()
 
-o = vision.HandLandmarkerOptions(
-    base_options=python.BaseOptions(model_asset_path='hand_landmarker.task'),
-    running_mode=vision.RunningMode.IMAGE,
+c0 = c.VideoCapture(0)
+c1 = c.VideoCapture(1)
+if not c0.isOpened() or not c1.isOpened():
+    y.exit()
+
+o = v.HandLandmarkerOptions(
+    base_options=p.BaseOptions(model_asset_path='hand_landmarker.task'),
+    running_mode=v.RunningMode.IMAGE,
     num_hands=2
 )
-d = vision.HandLandmarker.create_from_options(o)
-
+d = v.HandLandmarker.create_from_options(o)
 cn = [(0,1),(1,2),(2,3),(3,4),(0,5),(5,6),(6,7),(7,8),(5,9),(9,10),(10,11),(11,12),(9,13),(13,14),(14,15),(15,16),(13,17),(17,18),(18,19),(19,20),(0,17)]
 
 bd = []
 cf = None
-act = True
+a = True
 
 def wk():
     global bd
-    s = requests.Session()
-    u = 'https://detect.roboflow.com/find-battery-current/11'
-    p = {'api_key': '6tPCOrKxxsO95lqJTqkg'}
-    while act:
+    s = r.Session()
+    u = 'https://detect.roboflow.com/find-battery-ev2es/1'
+    q = {'api_key': '6tPCOrKxxsO95lqJTqkg'}
+    while a:
         if cf is not None:
             try:
                 cs = cf.copy()
-                oh, ow = cs.shape[:2]
-                sm = cv.resize(cs, (320, 240))
-                _, buf = cv.imencode('.jpg', sm)
-                b64 = base64.b64encode(buf).decode('ascii')
-                r = s.post(u, params=p, data=b64, headers={'Content-Type': 'application/x-www-form-urlencoded'}, timeout=2).json()
-                preds = r.get('predictions', [])
+                h, w = cs.shape[:2]
+                sm = c.resize(cs, (320, 240))
+                _, bf = c.imencode('.jpg', sm)
+                b6 = b.b64encode(bf).decode('ascii')
+                rs = s.post(u, params=q, data=b6, headers={'Content-Type': 'application/x-www-form-urlencoded'}, timeout=2).json()
+                ps = rs.get('predictions', [])
                 nb = []
-                for pr in preds:
+                for pr in ps:
                     if pr['confidence'] > 0.5:
-                        x, y, w, h = pr['x'], pr['y'], pr['width'], pr['height']
-                        x1 = int((x - w / 2) * ow / 320.0)
-                        y1 = int((y - h / 2) * oh / 240.0)
-                        x2 = int((x + w / 2) * ow / 320.0)
-                        y2 = int((y + h / 2) * oh / 240.0)
+                        x, y, w_, h_ = pr['x'], pr['y'], pr['width'], pr['height']
+                        x1 = int((x - w_ / 2) * w / 320.0)
+                        y1 = int((y - h_ / 2) * h / 240.0)
+                        x2 = int((x + w_ / 2) * w / 320.0)
+                        y2 = int((y + h_ / 2) * h / 240.0)
                         nb.append((x1, y1, x2, y2, pr['class'], pr['confidence']))
                 bd = nb
             except:
                 pass
-t = threading.Thread(target=wk, daemon=True)
-t.start()
-while True:
-    ok, f = c.read()
-    if not ok:
-        break
-    
-    cf = f.copy()
-    fh, fw = f.shape[:2]
-    
-    for x1, y1, x2, y2, lbl, conf in bd:
-        cv.rectangle(f, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        cv.putText(f, "%s %.2f" % (lbl, conf), (x1, y1 - 10), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-    
-    rgb = cv.cvtColor(f, cv.COLOR_BGR2RGB)
-    mi = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
-    hr = d.detect(mi)
-    if hr.hand_landmarks:
-        for hl in hr.hand_landmarks:
-            for p1, p2 in cn:
-                pt1 = hl[p1]
-                pt2 = hl[p2]
-                cv.line(f, (int(pt1.x * fw), int(pt1.y * fh)), (int(pt2.x * fw), int(pt2.y * fh)), (0, 255, 0), 2)
-            for i in [4, 8, 12, 16, 20]:
-                pt = hl[i]
-                cx, cy = int(pt.x * fw), int(pt.y * fh)
-                cv.circle(f, (cx, cy), 8, (0, 0, 255), -1)
-                cv.putText(f, str(i), (cx - 10, cy - 15), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-                
-    cv.imshow("Combined Tracker", f)
-    if cv.waitKey(1) & 0xFF == ord('q'):
-        break
 
-act = False
-c.release()
-cv.destroyAllWindows()
+th = t.Thread(target=wk, daemon=True)
+th.start()
+
+import os, json
+rot_file = 'rot_config.json'
+if os.path.exists(rot_file):
+    with open(rot_file, 'r') as f:
+        cfg = json.load(f)
+        rot0 = cfg.get('rot0', 0)
+        rot1 = cfg.get('rot1', 0)
+else:
+    rot0 = 0
+    rot1 = 0
+
+def save_rot():
+    with open(rot_file, 'w') as f: json.dump({'rot0': rot0, 'rot1': rot1}, f)
+
+img_c = 0
+btn_cl = False
+def m_cb(e, x, y, f, p):
+    global btn_cl
+    if e == c.EVENT_LBUTTONDOWN and 10 <= x <= 160 and 10 <= y <= 60: btn_cl = True
+c.namedWindow("Duo")
+c.setMouseCallback("Duo", m_cb)
+
+while True:
+    ok0, r0 = c0.read()
+    ok1, r1 = c1.read()
+    if not ok0 or not ok1: break
+    
+    if rot0 == 1: r0 = c.rotate(r0, c.ROTATE_90_CLOCKWISE)
+    elif rot0 == 2: r0 = c.rotate(r0, c.ROTATE_180)
+    elif rot0 == 3: r0 = c.rotate(r0, c.ROTATE_90_COUNTERCLOCKWISE)
+    
+    if rot1 == 1: r1 = c.rotate(r1, c.ROTATE_90_CLOCKWISE)
+    elif rot1 == 2: r1 = c.rotate(r1, c.ROTATE_180)
+    elif rot1 == 3: r1 = c.rotate(r1, c.ROTATE_90_COUNTERCLOCKWISE)
+    
+    o0 = r0.copy()
+    o1 = r1.copy()
+    
+    f0 = c.resize(r0, (int(480 * r0.shape[1] / r0.shape[0]), 480))
+    f1 = c.resize(r1, (int(480 * r1.shape[1] / r1.shape[0]), 480))
+    cf = f0.copy()
+    f0_h, f0_w = f0.shape[:2]
+    f1_h, f1_w = f1.shape[:2]
+    
+    for x1, y1, x2, y2, lb, co in bd:
+        c.rectangle(f0, (x1, y1), (x2, y2), (0, 255, 0), 2)
+        c.putText(f0, "%s %.2f" % (lb, co), (x1, y1 - 10), c.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        
+    r0 = c.cvtColor(f0, c.COLOR_BGR2RGB)
+    r1 = c.cvtColor(f1, c.COLOR_BGR2RGB)
+    
+    hr0 = d.detect(m.Image(image_format=m.ImageFormat.SRGB, data=r0))
+    hr1 = d.detect(m.Image(image_format=m.ImageFormat.SRGB, data=r1))
+    
+    pt0 = None
+    pt1 = None
+    
+    if hr0.hand_landmarks:
+        h0 = hr0.hand_landmarks[0]
+        for p1_, p2_ in cn:
+            c.line(f0, (int(h0[p1_].x * f0_w), int(h0[p1_].y * f0_h)), (int(h0[p2_].x * f0_w), int(h0[p2_].y * f0_h)), (0, 255, 0), 2)
+        for i in [4, 8, 12, 16, 20]:
+            cx, cy = int(h0[i].x * f0_w), int(h0[i].y * f0_h)
+            c.circle(f0, (cx, cy), 8, (0, 0, 255), -1)
+        pt0 = (int(h0[8].x * f0_w), int(h0[8].y * f0_h))
+
+    if hr1.hand_landmarks:
+        h1 = hr1.hand_landmarks[0]
+        for p1_, p2_ in cn:
+            c.line(f1, (int(h1[p1_].x * f1_w), int(h1[p1_].y * f1_h)), (int(h1[p2_].x * f1_w), int(h1[p2_].y * f1_h)), (0, 255, 0), 2)
+        for i in [4, 8, 12, 16, 20]:
+            cx, cy = int(h1[i].x * f1_w), int(h1[i].y * f1_h)
+            c.circle(f1, (cx, cy), 8, (0, 0, 255), -1)
+        pt1 = (int(h1[8].x * f1_w), int(h1[8].y * f1_h))
+
+    lx, ly, lz = None, None, None
+    if pt0 and pt1:
+        pts = c.triangulatePoints(p0, p1, n.array([[pt0[0]], [pt0[1]]], dtype=n.float32), n.array([[pt1[0]], [pt1[1]]], dtype=n.float32))
+        pts /= pts[3]
+        lx, ly, lz = pts[0, 0], pts[1, 0], pts[2, 0]
+        c.putText(f0, "3D: X=%.1f Y=%.1f Z=%.1f" % (lx, ly, lz), (20, 80), c.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
+
+    cm = c.hconcat([f0, f1])
+    c.rectangle(cm, (10, 10), (160, 60), (0, 0, 255), -1)
+    c.putText(cm, "CAPTURE", (25, 45), c.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+    c.putText(cm, "Captured: %d" % img_c, (10, 90), c.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
+
+    if btn_cl:
+        import os
+        if not os.path.exists('calib'): os.makedirs('calib')
+        c.imwrite('calib/t_%d.jpg' % img_c, o0)
+        c.imwrite('calib/s_%d.jpg' % img_c, o1)
+        print("Saved calib images %d" % img_c)
+        img_c += 1
+        btn_cl = False
+
+    c.imshow("Duo", cm)
+    k = c.waitKey(1) & 0xFF
+    if k == ord('q'): break
+    elif k == ord('1'): 
+        rot0 = (rot0 + 1) % 4
+        save_rot()
+    elif k == ord('2'): 
+        rot1 = (rot1 + 1) % 4
+        save_rot()
+
+a = False
+c0.release()
+c1.release()
+c.destroyAllWindows()
 d.close()
