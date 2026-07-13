@@ -129,6 +129,13 @@ while True:
                 cx, cy = int(h0[i].x * f0_w), int(h0[i].y * f0_h)
                 c.circle(f0, (cx, cy), 8, (0, 0, 255), -1)
             pt0 = (int(h0[8].x * f0_w), int(h0[8].y * f0_h))
+            
+            p_obj = 'None'
+            for bx1, by1, bx2, by2, lb, co in bd:
+                if bx1 <= pt0[0] <= bx2 and by1 <= pt0[1] <= by2:
+                    p_obj = lb
+                    break
+            c.putText(f0, "Pointing at: %s" % p_obj, (10, f0_h - 10), c.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
 
     if cam_mode in [0, 2]:
         hr1 = d.detect(m.Image(image_format=m.ImageFormat.SRGB, data=r1))
