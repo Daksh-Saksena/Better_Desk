@@ -9,6 +9,8 @@ import base64 as b
 import requests as r
 import math
 import json
+import ui
+import time
 
 
 idx0 = 0
@@ -20,6 +22,12 @@ o = v.HandLandmarkerOptions(
     num_hands=2
 )
 d = v.HandLandmarker.create_from_options(o)
+
+with open('components.json','r') as f:
+    COMPONENTS=json.load(f)
+    print("Loaded", len(COMPONENTS), "components")
+print(COMPONENTS["esp32"])
+prev=time.time()
 cn = [(0,1),(1,2),(2,3),(3,4),(0,5),(5,6),(6,7),(7,8),(5,9),(9,10),(10,11),(11,12),(9,13),(13,14),(14,15),(15,16),(13,17),(17,18),(18,19),(19,20),(0,17)]
 
 bd0 = []
@@ -30,7 +38,7 @@ def wk():
     global bd0
     s = r.Session()
     u = 'https://detect.roboflow.com/find-battery-current-vzeoc/2'
-    q = {'api_key': 'YOUR_API_KEY'}
+    q = {'api_key': '84aau744LSxt5mDCmfY4'}
     while a:
         cf = cf0
         if cf is not None:
@@ -120,12 +128,30 @@ while True:
             if bx1 <= pt0[0] <= bx2 and by1 <= pt0[1] <= by2:
                 p_obj = lb
                 break
-        c.putText(f0, "Pointing at: %s" % p_obj, (10, f0_h - 10), c.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
+        selected_component=p_obj if p_obj!='None' else None
 
     cm = f0
     c.rectangle(cm, (10, 10), (160, 60), (0, 0, 255), -1)
     c.putText(cm, "CAPTURE", (25, 45), c.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
     c.putText(cm, "Captured: %d" % img_c, (10, 90), c.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
+
+    now=time.time()
+    fps=1.0/max(now-prev,1e-6)
+    prev=now
+    try:
+        cm = ui.draw(
+            f0,
+            bd0,
+            hr0.hand_landmarks if hr0.hand_landmarks else [],
+            cn,
+            selected_component if 'selected_component' in locals() else None,
+            COMPONENTS,
+            fps,
+            "AI Ready",
+            f"Objects: {len(bd0)}"
+        )
+    except Exception as e:
+        print(e)
 
     if btn_cl:
         import os

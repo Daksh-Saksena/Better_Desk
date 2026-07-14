@@ -1,0 +1,1747 @@
+{
+  "7_seg": {
+    "name": "7 Seg",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/7_seg.png",
+    "datasheet": "",
+    "aliases": [
+      "7_seg"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "accelerometer": {
+    "name": "Accelerometer",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/accelerometer.png",
+    "datasheet": "",
+    "aliases": [
+      "accelerometer"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "adc": {
+    "name": "Adc",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/adc.png",
+    "datasheet": "",
+    "aliases": [
+      "adc"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "arduino_pro_micro": {
+    "name": "Arduino Pro Micro",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/arduino_pro_micro.png",
+    "datasheet": "",
+    "aliases": [
+      "arduino_pro_micro"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "arduino_due": {
+    "name": "Arduino Due",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/arduino_due.png",
+    "datasheet": "",
+    "aliases": [
+      "arduino_due"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "arduino_leonardo": {
+    "name": "Arduino Leonardo",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/arduino_leonardo.png",
+    "datasheet": "",
+    "aliases": [
+      "arduino_leonardo"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "arduino_mega": {
+    "name": "Arduino Mega",
+    "category": "Microcontroller",
+    "description": "ATmega2560 board",
+    "specifications": {
+      "Operating Voltage": "5V",
+      "Current": "",
+      "Power": "",
+      "Interface": "UART, SPI, I2C"
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/arduino_mega.png",
+    "datasheet": "",
+    "aliases": [
+      "arduino_mega"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "arduino_micro": {
+    "name": "Arduino Micro",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/arduino_micro.png",
+    "datasheet": "",
+    "aliases": [
+      "arduino_micro"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "arduino_mini": {
+    "name": "Arduino Mini",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/arduino_mini.png",
+    "datasheet": "",
+    "aliases": [
+      "arduino_mini"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "arduino_nano": {
+    "name": "Arduino Nano",
+    "category": "Microcontroller",
+    "description": "Compact ATmega328P board",
+    "specifications": {
+      "Operating Voltage": "5V",
+      "Current": "",
+      "Power": "",
+      "Interface": "UART, SPI, I2C"
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/arduino_nano.png",
+    "datasheet": "",
+    "aliases": [
+      "arduino_nano"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "arduino_opla": {
+    "name": "Arduino Opla",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/arduino_opla.png",
+    "datasheet": "",
+    "aliases": [
+      "arduino_opla"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "arduino_uno": {
+    "name": "Arduino Uno",
+    "category": "Microcontroller",
+    "description": "ATmega328P development board",
+    "specifications": {
+      "Operating Voltage": "5V",
+      "Current": "20mA per GPIO",
+      "Power": "",
+      "Interface": "UART, SPI, I2C"
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/arduino_uno.png",
+    "datasheet": "",
+    "aliases": [
+      "arduino_uno"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "battery": {
+    "name": "Battery",
+    "category": "Power",
+    "description": "General battery source",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/battery.png",
+    "datasheet": "",
+    "aliases": [
+      "battery"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "battery_9v": {
+    "name": "Battery 9V",
+    "category": "Power",
+    "description": "9V battery",
+    "specifications": {
+      "Operating Voltage": "9V",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/battery_9v.png",
+    "datasheet": "",
+    "aliases": [
+      "battery_9v"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "bldc": {
+    "name": "Bldc",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/bldc.png",
+    "datasheet": "",
+    "aliases": [
+      "bldc"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "bluetooth": {
+    "name": "Bluetooth",
+    "category": "Communication",
+    "description": "Bluetooth module",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/bluetooth.png",
+    "datasheet": "",
+    "aliases": [
+      "bluetooth"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "breadboard": {
+    "name": "Breadboard",
+    "category": "Prototyping",
+    "description": "Solderless prototyping board",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/breadboard.png",
+    "datasheet": "",
+    "aliases": [
+      "breadboard"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "button": {
+    "name": "Button",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/button.png",
+    "datasheet": "",
+    "aliases": [
+      "button"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "buzzer": {
+    "name": "Buzzer",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/buzzer.png",
+    "datasheet": "",
+    "aliases": [
+      "buzzer"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "camera": {
+    "name": "Camera",
+    "category": "Vision",
+    "description": "Camera module",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/camera.png",
+    "datasheet": "",
+    "aliases": [
+      "camera"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "capacitor": {
+    "name": "Capacitor",
+    "category": "Passive",
+    "description": "Stores electrical charge",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/capacitor.png",
+    "datasheet": "",
+    "aliases": [
+      "capacitor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "chassis": {
+    "name": "Chassis",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/chassis.png",
+    "datasheet": "",
+    "aliases": [
+      "chassis"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "clock_generator": {
+    "name": "Clock Generator",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/clock_generator.png",
+    "datasheet": "",
+    "aliases": [
+      "clock_generator"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "color_sensor": {
+    "name": "Color Sensor",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/color_sensor.png",
+    "datasheet": "",
+    "aliases": [
+      "color_sensor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "current_sensor": {
+    "name": "Current Sensor",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/current_sensor.png",
+    "datasheet": "",
+    "aliases": [
+      "current_sensor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "dc_motor": {
+    "name": "Dc Motor",
+    "category": "Motor",
+    "description": "Brushed DC motor",
+    "specifications": {
+      "Operating Voltage": "3-12V",
+      "Current": "Varies",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/dc_motor.png",
+    "datasheet": "",
+    "aliases": [
+      "dc_motor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "dht": {
+    "name": "Dht",
+    "category": "Sensor",
+    "description": "Temperature and humidity sensor",
+    "specifications": {
+      "Operating Voltage": "3.3-5V",
+      "Current": "",
+      "Power": "",
+      "Interface": "Single Wire"
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/dht.png",
+    "datasheet": "",
+    "aliases": [
+      "dht"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "display": {
+    "name": "Display",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/display.png",
+    "datasheet": "",
+    "aliases": [
+      "display"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "digital_potentiometer": {
+    "name": "Digital Potentiometer",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/digital_potentiometer.png",
+    "datasheet": "",
+    "aliases": [
+      "digital_potentiometer"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "encoder": {
+    "name": "Encoder",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/encoder.png",
+    "datasheet": "",
+    "aliases": [
+      "encoder"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "environmental_sensor": {
+    "name": "Environmental Sensor",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/environmental_sensor.png",
+    "datasheet": "",
+    "aliases": [
+      "environmental_sensor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "esp_wifi": {
+    "name": "Esp Wifi",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/esp_wifi.png",
+    "datasheet": "",
+    "aliases": [
+      "esp_wifi"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "esp32": {
+    "name": "Esp32",
+    "category": "Microcontroller",
+    "description": "Dual-core Wi-Fi and Bluetooth MCU",
+    "specifications": {
+      "Operating Voltage": "3.3V",
+      "Current": "80-240mA",
+      "Power": "USB/VIN",
+      "Interface": "Wi-Fi, Bluetooth, UART, SPI, I2C"
+    },
+    "uses": [
+      "IoT",
+      "Robotics"
+    ],
+    "warnings": [
+      "GPIO not 5V tolerant"
+    ],
+    "pinout": "assets/pinouts/esp32.png",
+    "datasheet": "",
+    "aliases": [
+      "esp32"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "esp8266": {
+    "name": "Esp8266",
+    "category": "Microcontroller",
+    "description": "Low-cost Wi-Fi MCU",
+    "specifications": {
+      "Operating Voltage": "3.3V",
+      "Current": "70-200mA",
+      "Power": "",
+      "Interface": "Wi-Fi, UART"
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/esp8266.png",
+    "datasheet": "",
+    "aliases": [
+      "esp8266"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "fan": {
+    "name": "Fan",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/fan.png",
+    "datasheet": "",
+    "aliases": [
+      "fan"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "flame_sensor": {
+    "name": "Flame Sensor",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/flame_sensor.png",
+    "datasheet": "",
+    "aliases": [
+      "flame_sensor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "flight_controller": {
+    "name": "Flight Controller",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/flight_controller.png",
+    "datasheet": "",
+    "aliases": [
+      "flight_controller"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "gas_sensor": {
+    "name": "Gas Sensor",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/gas_sensor.png",
+    "datasheet": "",
+    "aliases": [
+      "gas_sensor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "gps": {
+    "name": "Gps",
+    "category": "Sensor",
+    "description": "GPS receiver",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/gps.png",
+    "datasheet": "",
+    "aliases": [
+      "gps"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "grove": {
+    "name": "Grove",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/grove.png",
+    "datasheet": "",
+    "aliases": [
+      "grove"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "h_bridge": {
+    "name": "H Bridge",
+    "category": "Motor Driver",
+    "description": "Controls DC motor direction",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/h_bridge.png",
+    "datasheet": "",
+    "aliases": [
+      "h_bridge"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "heart_rate_sensor": {
+    "name": "Heart Rate Sensor",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/heart_rate_sensor.png",
+    "datasheet": "",
+    "aliases": [
+      "heart_rate_sensor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "i2c_multiplexer": {
+    "name": "I2C Multiplexer",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/i2c_multiplexer.png",
+    "datasheet": "",
+    "aliases": [
+      "i2c_multiplexer"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "imu": {
+    "name": "Imu",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/imu.png",
+    "datasheet": "",
+    "aliases": [
+      "imu"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "ir_array": {
+    "name": "Ir Array",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/ir_array.png",
+    "datasheet": "",
+    "aliases": [
+      "ir_array"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "ir_camera": {
+    "name": "Ir Camera",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/ir_camera.png",
+    "datasheet": "",
+    "aliases": [
+      "ir_camera"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "ir_receiver": {
+    "name": "Ir Receiver",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/ir_receiver.png",
+    "datasheet": "",
+    "aliases": [
+      "ir_receiver"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "ir_sensor": {
+    "name": "Ir Sensor",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/ir_sensor.png",
+    "datasheet": "",
+    "aliases": [
+      "ir_sensor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "joystick": {
+    "name": "Joystick",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/joystick.png",
+    "datasheet": "",
+    "aliases": [
+      "joystick"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "jumper_wire": {
+    "name": "Jumper Wire",
+    "category": "Prototyping",
+    "description": "Breadboard connection wire",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/jumper_wire.png",
+    "datasheet": "",
+    "aliases": [
+      "jumper_wire"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "keypad": {
+    "name": "Keypad",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/keypad.png",
+    "datasheet": "",
+    "aliases": [
+      "keypad"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "lcd": {
+    "name": "Lcd",
+    "category": "Display",
+    "description": "Character LCD",
+    "specifications": {
+      "Operating Voltage": "5V",
+      "Current": "",
+      "Power": "",
+      "Interface": "Parallel/I2C"
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/lcd.png",
+    "datasheet": "",
+    "aliases": [
+      "lcd"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "lcd_oled": {
+    "name": "Lcd Oled",
+    "category": "Display",
+    "description": "OLED display",
+    "specifications": {
+      "Operating Voltage": "3.3-5V",
+      "Current": "",
+      "Power": "",
+      "Interface": "I2C/SPI"
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/lcd_oled.png",
+    "datasheet": "",
+    "aliases": [
+      "lcd_oled"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "ldr": {
+    "name": "Ldr",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/ldr.png",
+    "datasheet": "",
+    "aliases": [
+      "ldr"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "led": {
+    "name": "Led",
+    "category": "Indicator",
+    "description": "Light Emitting Diode",
+    "specifications": {
+      "Operating Voltage": "2-3.3V",
+      "Current": "20mA",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/led.png",
+    "datasheet": "",
+    "aliases": [
+      "led"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "led_matrix": {
+    "name": "Led Matrix",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/led_matrix.png",
+    "datasheet": "",
+    "aliases": [
+      "led_matrix"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "lilypad": {
+    "name": "Lilypad",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/lilypad.png",
+    "datasheet": "",
+    "aliases": [
+      "lilypad"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "lipo": {
+    "name": "Lipo",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/lipo.png",
+    "datasheet": "",
+    "aliases": [
+      "lipo"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "magnetometer": {
+    "name": "Magnetometer",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/magnetometer.png",
+    "datasheet": "",
+    "aliases": [
+      "magnetometer"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "motor": {
+    "name": "Motor",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/motor.png",
+    "datasheet": "",
+    "aliases": [
+      "motor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "coin_cell_battery": {
+    "name": "Coin Cell Battery",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/coin_cell_battery.png",
+    "datasheet": "",
+    "aliases": [
+      "coin_cell_battery"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "pir": {
+    "name": "Pir",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/pir.png",
+    "datasheet": "",
+    "aliases": [
+      "pir"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "pliers": {
+    "name": "Pliers",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/pliers.png",
+    "datasheet": "",
+    "aliases": [
+      "pliers"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "weight": {
+    "name": "Weight",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/weight.png",
+    "datasheet": "",
+    "aliases": [
+      "weight"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "potentiometer": {
+    "name": "Potentiometer",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/potentiometer.png",
+    "datasheet": "",
+    "aliases": [
+      "potentiometer"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "power_module": {
+    "name": "Power Module",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/power_module.png",
+    "datasheet": "",
+    "aliases": [
+      "power_module"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "prototype_pcb": {
+    "name": "Prototype Pcb",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/prototype_pcb.png",
+    "datasheet": "",
+    "aliases": [
+      "prototype_pcb"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "pump": {
+    "name": "Pump",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/pump.png",
+    "datasheet": "",
+    "aliases": [
+      "pump"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "raspberry_pi": {
+    "name": "Raspberry Pi",
+    "category": "Single Board Computer",
+    "description": "Linux-capable ARM computer",
+    "specifications": {
+      "Operating Voltage": "5V",
+      "Current": "2-5A",
+      "Power": "",
+      "Interface": "GPIO, USB, HDMI"
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/raspberry_pi.png",
+    "datasheet": "",
+    "aliases": [
+      "raspberry_pi"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "relay": {
+    "name": "Relay",
+    "category": "Switching",
+    "description": "Electrically controlled switch",
+    "specifications": {
+      "Operating Voltage": "5V",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/relay.png",
+    "datasheet": "",
+    "aliases": [
+      "relay"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "remote_ir": {
+    "name": "Remote Ir",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/remote_ir.png",
+    "datasheet": "",
+    "aliases": [
+      "remote_ir"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "resistor": {
+    "name": "Resistor",
+    "category": "Passive",
+    "description": "Limits current",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/resistor.png",
+    "datasheet": "",
+    "aliases": [
+      "resistor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "rfid": {
+    "name": "Rfid",
+    "category": "Identification",
+    "description": "RFID reader/writer",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/rfid.png",
+    "datasheet": "",
+    "aliases": [
+      "rfid"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "rtc": {
+    "name": "Rtc",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/rtc.png",
+    "datasheet": "",
+    "aliases": [
+      "rtc"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "lock": {
+    "name": "Lock",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/lock.png",
+    "datasheet": "",
+    "aliases": [
+      "lock"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "servo": {
+    "name": "Servo",
+    "category": "Motor",
+    "description": "PWM controlled servo",
+    "specifications": {
+      "Operating Voltage": "4.8-7.2V",
+      "Current": "0.5-2.5A",
+      "Power": "",
+      "Interface": "PWM"
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/servo.png",
+    "datasheet": "",
+    "aliases": [
+      "servo"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "soil_moisture": {
+    "name": "Soil Moisture",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/soil_moisture.png",
+    "datasheet": "",
+    "aliases": [
+      "soil_moisture"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "solar_panel": {
+    "name": "Solar Panel",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/solar_panel.png",
+    "datasheet": "",
+    "aliases": [
+      "solar_panel"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "sound_sensor": {
+    "name": "Sound Sensor",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/sound_sensor.png",
+    "datasheet": "",
+    "aliases": [
+      "sound_sensor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "speaker": {
+    "name": "Speaker",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/speaker.png",
+    "datasheet": "",
+    "aliases": [
+      "speaker"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "stepper_driver": {
+    "name": "Stepper Driver",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/stepper_driver.png",
+    "datasheet": "",
+    "aliases": [
+      "stepper_driver"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "stepper_motor": {
+    "name": "Stepper Motor",
+    "category": "Motor",
+    "description": "Precision stepper motor",
+    "specifications": {
+      "Operating Voltage": "12-24V",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/stepper_motor.png",
+    "datasheet": "",
+    "aliases": [
+      "stepper_motor"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "battery_holder": {
+    "name": "Battery Holder",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/battery_holder.png",
+    "datasheet": "",
+    "aliases": [
+      "battery_holder"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "switch": {
+    "name": "Switch",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/switch.png",
+    "datasheet": "",
+    "aliases": [
+      "switch"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "ultrasonic": {
+    "name": "Ultrasonic",
+    "category": "Sensor",
+    "description": "Distance sensor",
+    "specifications": {
+      "Operating Voltage": "5V",
+      "Current": "",
+      "Power": "",
+      "Interface": "Trig/Echo"
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/ultrasonic.png",
+    "datasheet": "",
+    "aliases": [
+      "ultrasonic"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "voltage_converter": {
+    "name": "Voltage Converter",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/voltage_converter.png",
+    "datasheet": "",
+    "aliases": [
+      "voltage_converter"
+    ],
+    "related": [],
+    "common_projects": []
+  },
+  "xbee": {
+    "name": "Xbee",
+    "category": "Unknown",
+    "description": "",
+    "specifications": {
+      "Operating Voltage": "",
+      "Current": "",
+      "Power": "",
+      "Interface": ""
+    },
+    "uses": [],
+    "warnings": [],
+    "pinout": "assets/pinouts/xbee.png",
+    "datasheet": "",
+    "aliases": [
+      "xbee"
+    ],
+    "related": [],
+    "common_projects": []
+  }
+}
