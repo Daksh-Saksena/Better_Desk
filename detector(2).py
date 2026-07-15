@@ -8,19 +8,9 @@ import threading as t
 import base64 as b
 import requests as r
 import math
-
-try:
-    st = n.load("stereo.npz")
-    p0 = st["P0"]
-    p1 = st["P1"]
-except:
-    y.exit()
-
-idx0 = 0
-idx1 = 2
-c0 = c.VideoCapture(idx0)
-c1 = c.VideoCapture(idx1)
 import json
+import ui
+import time
 
 
 idx0 = 0
@@ -32,25 +22,24 @@ o = v.HandLandmarkerOptions(
     num_hands=2
 )
 d = v.HandLandmarker.create_from_options(o)
+
+with open('components.json','r') as f:
+    COMPONENTS=json.load(f)
+    print("Loaded", len(COMPONENTS), "components")
+print(COMPONENTS["esp32"])
+prev=time.time()
 cn = [(0,1),(1,2),(2,3),(3,4),(0,5),(5,6),(6,7),(7,8),(5,9),(9,10),(10,11),(11,12),(9,13),(13,14),(14,15),(15,16),(13,17),(17,18),(18,19),(19,20),(0,17)]
 
-bd0 = []
-bd1 = []
-cf0 = None
-cf1 = None
 bd0 = []
 cf0 = None
 a = True
 
-def wk(cam_id):
-    global bd0, bd1
 def wk():
     global bd0
     s = r.Session()
     u = 'https://detect.roboflow.com/find-battery-current-vzeoc/2'
-    q = {'api_key': 'YOUR_API_KEY'}
+    q = {'api_key': '84aau744LSxt5mDCmfY4'}
     while a:
-        cf = cf0 if cam_id == 0 else cf1
         cf = cf0
         if cf is not None:
             try:
@@ -59,7 +48,6 @@ def wk():
                 sm = c.resize(cs, (320, 240))
                 _, bf = c.imencode('.jpg', sm)
                 b6 = b.b64encode(bf).decode('ascii')
-                rs = s.post(u, params=q, data=b6, headers={'Content-Type': 'application/x-www-form-urlencoded'}, timeout=5).json()
                 rs = s.post(u, params=q, data=b6, headers={'Content-Type': 'application/x-www-form-urlencoded'}, timeout=5).json()
                 ps = rs.get('predictions', [])
                 nb = []
@@ -71,15 +59,6 @@ def wk():
                         x2 = int((x + w_ / 2) * w / 320.0)
                         y2 = int((y + h_ / 2) * h / 240.0)
                         nb.append((x1, y1, x2, y2, pr['class'], pr['confidence']))
-                if cam_id == 0: bd0 = nb
-                else: bd1 = nb
-            except Exception as e:
-                print(f"API Error (Cam {cam_id}):", e)
-        import time
-        time.sleep(0.2)
-
-t.Thread(target=wk, args=(0,), daemon=True).start()
-t.Thread(target=wk, args=(1,), daemon=True).start()
                 bd0 = nb
             except Exception as e:
                 print(f"API Error:", e)
@@ -111,14 +90,6 @@ c.setMouseCallback("Mono", m_cb)
 
 while True:
     ok0, r0 = c0.read()
-    ok1, r1 = c1.read()
-    
-    if not ok0 or r0 is None:
-        r0 = n.zeros((480, 640, 3), dtype=n.uint8)
-        c.putText(r0, "NO CAM %d" % idx0, (50, 240), c.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
-    if not ok1 or r1 is None:
-        r1 = n.zeros((480, 640, 3), dtype=n.uint8)
-        c.putText(r1, "NO CAM %d" % idx1, (50, 240), c.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
     
     if not ok0 or r0 is None:
         r0 = n.zeros((480, 640, 3), dtype=n.uint8)
@@ -131,42 +102,17 @@ while True:
     o0 = r0.copy()
     
     f0 = c.resize(r0, (int(480 * r0.shape[1] / r0.shape[0]), 480))
-    f1 = c.resize(r1, (int(480 * r1.shape[1] / r1.shape[0]), 480))
-    cf0 = f0.copy()
-    cf1 = f1.copy()
     cf0 = f0.copy()
     f0_h, f0_w = f0.shape[:2]
     
     for x1, y1, x2, y2, lb, co in bd0:
-    for x1, y1, x2, y2, lb, co in bd0:
         c.rectangle(f0, (x1, y1), (x2, y2), (0, 255, 0), 2)
         c.putText(f0, "%s %.2f" % (lb, co), (x1, y1 - 10), c.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-        
-    for x1, y1, x2, y2, lb, co in bd1:
-        c.rectangle(f1, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        c.putText(f1, "%s %.2f" % (lb, co), (x1, y1 - 10), c.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         
     r0 = c.cvtColor(f0, c.COLOR_BGR2RGB)
     
     pt0 = None
     
-    if cam_mode in [0, 1]:
-        hr0 = d.detect(m.Image(image_format=m.ImageFormat.SRGB, data=r0))
-        if hr0.hand_landmarks:
-            h0 = hr0.hand_landmarks[0]
-            for p1_, p2_ in cn:
-                c.line(f0, (int(h0[p1_].x * f0_w), int(h0[p1_].y * f0_h)), (int(h0[p2_].x * f0_w), int(h0[p2_].y * f0_h)), (0, 255, 0), 2)
-            for i in [4, 8, 12, 16, 20]:
-                cx, cy = int(h0[i].x * f0_w), int(h0[i].y * f0_h)
-                c.circle(f0, (cx, cy), 8, (0, 0, 255), -1)
-            pt0 = (int(h0[8].x * f0_w), int(h0[8].y * f0_h))
-            
-            p_obj = 'None'
-            for bx1, by1, bx2, by2, lb, co in bd0:
-                if bx1 <= pt0[0] <= bx2 and by1 <= pt0[1] <= by2:
-                    p_obj = lb
-                    break
-            c.putText(f0, "Pointing at: %s" % p_obj, (10, f0_h - 10), c.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
     hr0 = d.detect(m.Image(image_format=m.ImageFormat.SRGB, data=r0))
     if hr0.hand_landmarks:
         h0 = hr0.hand_landmarks[0]
@@ -182,46 +128,30 @@ while True:
             if bx1 <= pt0[0] <= bx2 and by1 <= pt0[1] <= by2:
                 p_obj = lb
                 break
-        c.putText(f0, "Pointing at: %s" % p_obj, (10, f0_h - 10), c.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
+        selected_component=p_obj if p_obj!='None' else None
 
-    if cam_mode in [0, 2]:
-        hr1 = d.detect(m.Image(image_format=m.ImageFormat.SRGB, data=r1))
-        if hr1.hand_landmarks:
-            h1 = hr1.hand_landmarks[0]
-            for p1_, p2_ in cn:
-                c.line(f1, (int(h1[p1_].x * f1_w), int(h1[p1_].y * f1_h)), (int(h1[p2_].x * f1_w), int(h1[p2_].y * f1_h)), (0, 255, 0), 2)
-            for i in [4, 8, 12, 16, 20]:
-                cx, cy = int(h1[i].x * f1_w), int(h1[i].y * f1_h)
-                c.circle(f1, (cx, cy), 8, (0, 0, 255), -1)
-            pt1 = (int(h1[8].x * f1_w), int(h1[8].y * f1_h))
-            
-            p_obj1 = 'None'
-            for bx1, by1, bx2, by2, lb, co in bd1:
-                if bx1 <= pt1[0] <= bx2 and by1 <= pt1[1] <= by2:
-                    p_obj1 = lb
-                    break
-            c.putText(f1, "Pointing at: %s" % p_obj1, (10, f1_h - 10), c.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
-
-    lx, ly, lz = None, None, None
-    if cam_mode == 0 and pt0 and pt1:
-        pts = c.triangulatePoints(p0, p1, n.array([[pt0[0]], [pt0[1]]], dtype=n.float32), n.array([[pt1[0]], [pt1[1]]], dtype=n.float32))
-        pts /= pts[3]
-        lx, ly, lz = pts[0, 0], pts[1, 0], pts[2, 0]
-        c.putText(f0, "3D: X=%.1f Y=%.1f Z=%.1f" % (lx, ly, lz), (20, 80), c.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
-
-    if cam_mode == 0:
-        cm = c.hconcat([f0, f1])
-        c.rectangle(cm, (10, 10), (160, 60), (0, 0, 255), -1)
-        c.putText(cm, "CAPTURE", (25, 45), c.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
-        c.putText(cm, "Captured: %d" % img_c, (10, 90), c.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
-    elif cam_mode == 1:
-        cm = f0
-    elif cam_mode == 2:
-        cm = f1
     cm = f0
     c.rectangle(cm, (10, 10), (160, 60), (0, 0, 255), -1)
     c.putText(cm, "CAPTURE", (25, 45), c.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
     c.putText(cm, "Captured: %d" % img_c, (10, 90), c.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
+
+    now=time.time()
+    fps=1.0/max(now-prev,1e-6)
+    prev=now
+    try:
+        cm = ui.draw(
+            f0,
+            bd0,
+            hr0.hand_landmarks if hr0.hand_landmarks else [],
+            cn,
+            selected_component if 'selected_component' in locals() else None,
+            COMPONENTS,
+            fps,
+            "AI Ready",
+            f"Objects: {len(bd0)}"
+        )
+    except Exception as e:
+        print(e)
 
     if btn_cl:
         import os
@@ -234,10 +164,6 @@ while True:
     c.imshow("Mono", cm)
     k = c.waitKey(1) & 0xFF
     if k == ord('q'): break
-    elif k == ord('4'): 
-        c0, c1 = c1, c0
-        idx0, idx1 = idx1, idx0
-    elif k == ord('3'): cam_mode = (cam_mode + 1) % 3
     elif k == ord('5'):
         c0.release()
         idx0 = (idx0 + 1) % 5
