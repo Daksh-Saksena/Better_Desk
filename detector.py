@@ -16,10 +16,10 @@ try:
 except:
     y.exit()
 
-c0 = c.VideoCapture(0)
-c1 = c.VideoCapture(1)
-if not c0.isOpened() or not c1.isOpened():
-    y.exit()
+idx0 = 0
+idx1 = 2
+c0 = c.VideoCapture(idx0)
+c1 = c.VideoCapture(idx1)
 
 o = v.HandLandmarkerOptions(
     base_options=p.BaseOptions(model_asset_path='hand_landmarker.task'),
@@ -29,16 +29,19 @@ o = v.HandLandmarkerOptions(
 d = v.HandLandmarker.create_from_options(o)
 cn = [(0,1),(1,2),(2,3),(3,4),(0,5),(5,6),(6,7),(7,8),(5,9),(9,10),(10,11),(11,12),(9,13),(13,14),(14,15),(15,16),(13,17),(17,18),(18,19),(19,20),(0,17)]
 
-bd = []
-cf = None
+bd0 = []
+bd1 = []
+cf0 = None
+cf1 = None
 a = True
 
-def wk():
-    global bd
+def wk(cam_id):
+    global bd0, bd1
     s = r.Session()
     u = 'https://detect.roboflow.com/find-battery-current-vzeoc/2'
     q = {'api_key': '84aau744LSxt5mDCmfY4'}
     while a:
+        cf = cf0 if cam_id == 0 else cf1
         if cf is not None:
             try:
                 cs = cf.copy()
@@ -46,7 +49,7 @@ def wk():
                 sm = c.resize(cs, (320, 240))
                 _, bf = c.imencode('.jpg', sm)
                 b6 = b.b64encode(bf).decode('ascii')
-                rs = s.post(u, params=q, data=b6, headers={'Content-Type': 'application/x-www-form-urlencoded'}, timeout=2).json()
+                rs = s.post(u, params=q, data=b6, headers={'Content-Type': 'application/x-www-form-urlencoded'}, timeout=5).json()
                 ps = rs.get('predictions', [])
                 nb = []
                 for pr in ps:
@@ -57,12 +60,15 @@ def wk():
                         x2 = int((x + w_ / 2) * w / 320.0)
                         y2 = int((y + h_ / 2) * h / 240.0)
                         nb.append((x1, y1, x2, y2, pr['class'], pr['confidence']))
-                bd = nb
-            except:
-                pass
+                if cam_id == 0: bd0 = nb
+                else: bd1 = nb
+            except Exception as e:
+                print(f"API Error (Cam {cam_id}):", e)
+        import time
+        time.sleep(0.2)
 
-th = t.Thread(target=wk, daemon=True)
-th.start()
+t.Thread(target=wk, args=(0,), daemon=True).start()
+t.Thread(target=wk, args=(1,), daemon=True).start()
 
 import os, json
 rot_file = 'rot_config.json'
@@ -90,7 +96,13 @@ c.setMouseCallback("Duo", m_cb)
 while True:
     ok0, r0 = c0.read()
     ok1, r1 = c1.read()
-    if not ok0 or not ok1: break
+    
+    if not ok0 or r0 is None:
+        r0 = n.zeros((480, 640, 3), dtype=n.uint8)
+        c.putText(r0, "NO CAM %d" % idx0, (50, 240), c.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
+    if not ok1 or r1 is None:
+        r1 = n.zeros((480, 640, 3), dtype=n.uint8)
+        c.putText(r1, "NO CAM %d" % idx1, (50, 240), c.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
     
     if rot0 == 1: r0 = c.rotate(r0, c.ROTATE_90_CLOCKWISE)
     elif rot0 == 2: r0 = c.rotate(r0, c.ROTATE_180)
@@ -105,13 +117,18 @@ while True:
     
     f0 = c.resize(r0, (int(480 * r0.shape[1] / r0.shape[0]), 480))
     f1 = c.resize(r1, (int(480 * r1.shape[1] / r1.shape[0]), 480))
-    cf = f0.copy()
+    cf0 = f0.copy()
+    cf1 = f1.copy()
     f0_h, f0_w = f0.shape[:2]
     f1_h, f1_w = f1.shape[:2]
     
-    for x1, y1, x2, y2, lb, co in bd:
+    for x1, y1, x2, y2, lb, co in bd0:
         c.rectangle(f0, (x1, y1), (x2, y2), (0, 255, 0), 2)
         c.putText(f0, "%s %.2f" % (lb, co), (x1, y1 - 10), c.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        
+    for x1, y1, x2, y2, lb, co in bd1:
+        c.rectangle(f1, (x1, y1), (x2, y2), (0, 255, 0), 2)
+        c.putText(f1, "%s %.2f" % (lb, co), (x1, y1 - 10), c.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         
     r0 = c.cvtColor(f0, c.COLOR_BGR2RGB)
     r1 = c.cvtColor(f1, c.COLOR_BGR2RGB)
@@ -131,7 +148,7 @@ while True:
             pt0 = (int(h0[8].x * f0_w), int(h0[8].y * f0_h))
             
             p_obj = 'None'
-            for bx1, by1, bx2, by2, lb, co in bd:
+            for bx1, by1, bx2, by2, lb, co in bd0:
                 if bx1 <= pt0[0] <= bx2 and by1 <= pt0[1] <= by2:
                     p_obj = lb
                     break
@@ -147,6 +164,13 @@ while True:
                 cx, cy = int(h1[i].x * f1_w), int(h1[i].y * f1_h)
                 c.circle(f1, (cx, cy), 8, (0, 0, 255), -1)
             pt1 = (int(h1[8].x * f1_w), int(h1[8].y * f1_h))
+            
+            p_obj1 = 'None'
+            for bx1, by1, bx2, by2, lb, co in bd1:
+                if bx1 <= pt1[0] <= bx2 and by1 <= pt1[1] <= by2:
+                    p_obj1 = lb
+                    break
+            c.putText(f1, "Pointing at: %s" % p_obj1, (10, f1_h - 10), c.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
 
     lx, ly, lz = None, None, None
     if cam_mode == 0 and pt0 and pt1:
@@ -177,6 +201,9 @@ while True:
     c.imshow("Duo", cm)
     k = c.waitKey(1) & 0xFF
     if k == ord('q'): break
+    elif k == ord('4'): 
+        c0, c1 = c1, c0
+        idx0, idx1 = idx1, idx0
     elif k == ord('3'): cam_mode = (cam_mode + 1) % 3
     elif k == ord('1'): 
         rot0 = (rot0 + 1) % 4
