@@ -35,7 +35,7 @@ def draw_hand(img,landmarks,connections):
         for i,p in enumerate(hl):
             cv.circle(img,(int(p.x*w),int(p.y*h)),4,WHITE,-1)
 
-def draw_info_panel(img,component,data):
+def draw_info_panel(img, component, data, organising=False):
     PANEL_W = 320
     h, w = img.shape[:2]
     x = w - PANEL_W
@@ -44,6 +44,27 @@ def draw_info_panel(img,component,data):
     if not component or component not in data:
         cv.putText(img,"Point at a",(x+20,140),cv.FONT_HERSHEY_SIMPLEX,0.7,WHITE,2)
         cv.putText(img,"component...",(x+20,170),cv.FONT_HERSHEY_SIMPLEX,0.7,WHITE,2)
+
+        if organising:
+            cv.rectangle(
+                img,
+                (x + 10, h - 55),
+                (w - 10, h - 10),
+                ORANGE,
+                -1
+            )
+
+            cv.putText(
+                img,
+                "Organising Desk...",
+                (x + 20, h - 22),
+                cv.FONT_HERSHEY_SIMPLEX,
+                0.6,
+                WHITE,
+                2,
+                cv.LINE_AA
+            )
+
         return
     c=data[component]
     y=120
@@ -59,9 +80,27 @@ def draw_info_panel(img,component,data):
         if p is not None:
             p=cv.resize(p,(280,200))
             img[y:y+200,x+15:x+295]=p
+    if organising:
+        cv.rectangle(
+            img,
+            (x + 10, h - 55),
+            (w - 10, h - 10),
+            ORANGE,
+            -1
+        )
 
-def draw(frame, detections, hands, connections, selected, components,
-         fps=0, status="AI Ready", bottom="Ready"):
+        cv.putText(
+            img,
+            "Organising Desk...",
+            (x + 20, h - 22),
+            cv.FONT_HERSHEY_SIMPLEX,
+            0.6,
+            WHITE,
+            2,
+            cv.LINE_AA
+        )
+
+def draw(frame,detections,hands,connections,selected,components,fps=0,status="AI Ready",bottom="Ready", organising=False):
 
     PANEL_W = 320
 
@@ -83,6 +122,6 @@ def draw(frame, detections, hands, connections, selected, components,
     draw_bottom_bar(canvas[:, :w], bottom)
 
     # Draw the info panel on the RIGHT
-    draw_info_panel(canvas, selected, components)
+    draw_info_panel(canvas, selected, components, organising)
 
     return canvas
