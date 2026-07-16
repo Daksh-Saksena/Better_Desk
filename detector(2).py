@@ -23,7 +23,7 @@ o = v.HandLandmarkerOptions(
 )
 d = v.HandLandmarker.create_from_options(o)
 
-with open('components.json','r') as f:
+with open('components_10.json','r') as f:
     COMPONENTS=json.load(f)
     print("Loaded", len(COMPONENTS), "components")
 print(COMPONENTS["esp32"])

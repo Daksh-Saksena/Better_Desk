@@ -1,0 +1,257 @@
+{
+  "esp32": {
+    "name": "ESP32 DevKit V1",
+    "category": "Microcontroller",
+    "description": "Dual-core Wi-Fi and Bluetooth development board.",
+    "image": "images/esp32.png",
+    "specifications": {
+      "Operating Voltage": "3.3V",
+      "Input Voltage": "5V USB/VIN",
+      "GPIO Pins": "30",
+      "ADC": "18",
+      "DAC": "2",
+      "PWM": "16",
+      "CPU": "Dual-core Xtensa LX6",
+      "Clock": "240 MHz",
+      "Flash": "4 MB",
+      "Wi-Fi": "802.11 b/g/n",
+      "Bluetooth": "BLE 4.2"
+    },
+    "warnings": [
+      "3.3V logic only",
+      "GPIO34-39 are input only"
+    ],
+    "aliases": [
+      "esp32"
+    ],
+    "common_projects": [
+      "IoT",
+      "Robotics",
+      "AI Camera"
+    ],
+    "related": [
+      "servo",
+      "imu",
+      "ultrasonic"
+    ]
+  },
+  "esp8266": {
+    "name": "NodeMCU ESP8266",
+    "category": "Microcontroller",
+    "description": "Wi-Fi microcontroller board.",
+    "image": "images/esp8266.png",
+    "specifications": {
+      "Operating Voltage": "3.3V",
+      "Input Voltage": "5V USB/VIN",
+      "GPIO Pins": "11",
+      "CPU": "80/160 MHz",
+      "Flash": "4 MB"
+    },
+    "warnings": [
+      "3.3V logic only"
+    ],
+    "aliases": [
+      "esp8266",
+      "nodemcu"
+    ],
+    "common_projects": [
+      "IoT"
+    ],
+    "related": [
+      "relay",
+      "dht"
+    ]
+  },
+  "arduino_uno": {
+    "name": "Arduino Uno R3",
+    "category": "Microcontroller",
+    "description": "ATmega328P development board.",
+    "image": "images/arduino_uno.png",
+    "specifications": {
+      "Operating Voltage": "5V",
+      "Input Voltage": "7-12V",
+      "Digital I/O": "14",
+      "PWM": "6",
+      "Analog Inputs": "6",
+      "Clock": "16 MHz"
+    },
+    "warnings": [
+      "Max 20mA per GPIO"
+    ],
+    "aliases": [
+      "arduino_uno",
+      "uno"
+    ],
+    "common_projects": [
+      "Robotics"
+    ],
+    "related": [
+      "servo",
+      "ultrasonic"
+    ]
+  },
+  "arduino_nano": {
+    "name": "Arduino Nano",
+    "category": "Microcontroller",
+    "description": "Compact ATmega328P board.",
+    "image": "images/arduino_nano.png",
+    "specifications": {
+      "Operating Voltage": "5V",
+      "Digital I/O": "22",
+      "PWM": "6",
+      "Analog Inputs": "8"
+    },
+    "warnings": [],
+    "aliases": [
+      "arduino_nano",
+      "nano"
+    ],
+    "common_projects": [
+      "Mini robots"
+    ],
+    "related": [
+      "breadboard"
+    ]
+  },
+  "raspberry_pi": {
+    "name": "Raspberry Pi 4",
+    "category": "SBC",
+    "description": "Linux single-board computer.",
+    "image": "images/raspberry_pi.png",
+    "specifications": {
+      "GPIO": "40",
+      "Voltage": "5V",
+      "Wi-Fi": "Yes",
+      "Bluetooth": "Yes"
+    },
+    "warnings": [
+      "GPIO is 3.3V"
+    ],
+    "aliases": [
+      "raspberry_pi",
+      "pi"
+    ],
+    "common_projects": [
+      "Vision",
+      "Server"
+    ],
+    "related": [
+      "camera"
+    ]
+  },
+  "servo": {
+    "name": "SG90 Servo",
+    "category": "Actuator",
+    "description": "180\u00b0 hobby servo.",
+    "image": "images/servo.png",
+    "specifications": {
+      "Voltage": "4.8-6V",
+      "Control": "PWM",
+      "Rotation": "180\u00b0"
+    },
+    "warnings": [
+      "Use external supply"
+    ],
+    "aliases": [
+      "servo"
+    ],
+    "common_projects": [
+      "Robot arm"
+    ],
+    "related": [
+      "esp32"
+    ]
+  },
+  "ultrasonic": {
+    "name": "HC-SR04",
+    "category": "Sensor",
+    "description": "Ultrasonic distance sensor.",
+    "image": "images/ultrasonic.png",
+    "specifications": {
+      "Voltage": "5V",
+      "Range": "2-400 cm",
+      "Interface": "Trig/Echo"
+    },
+    "warnings": [
+      "Echo is 5V"
+    ],
+    "aliases": [
+      "ultrasonic",
+      "hc-sr04"
+    ],
+    "common_projects": [
+      "Obstacle avoidance"
+    ],
+    "related": [
+      "arduino_uno"
+    ]
+  },
+  "imu": {
+    "name": "MPU6050",
+    "category": "Sensor",
+    "description": "6-axis IMU.",
+    "image": "images/imu.png",
+    "specifications": {
+      "Voltage": "3-5V",
+      "Interface": "I2C",
+      "Accel": "3-axis",
+      "Gyro": "3-axis"
+    },
+    "warnings": [],
+    "aliases": [
+      "imu",
+      "mpu6050"
+    ],
+    "common_projects": [
+      "Self-balancing robot"
+    ],
+    "related": [
+      "esp32"
+    ]
+  },
+  "lcd": {
+    "name": "LCD1602 I2C",
+    "category": "Display",
+    "description": "16x2 character LCD.",
+    "image": "images/lcd.png",
+    "specifications": {
+      "Voltage": "5V",
+      "Interface": "I2C",
+      "Resolution": "16x2"
+    },
+    "warnings": [],
+    "aliases": [
+      "lcd"
+    ],
+    "common_projects": [
+      "Menus"
+    ],
+    "related": [
+      "arduino_uno"
+    ]
+  },
+  "rfid": {
+    "name": "RC522 RFID",
+    "category": "Sensor",
+    "description": "13.56MHz RFID reader.",
+    "image": "images/rfid.png",
+    "specifications": {
+      "Voltage": "3.3V",
+      "Interface": "SPI",
+      "Frequency": "13.56MHz"
+    },
+    "warnings": [
+      "Do not use 5V"
+    ],
+    "aliases": [
+      "rfid",
+      "rc522"
+    ],
+    "common_projects": [
+      "Access control"
+    ],
+    "related": [
+      "esp32"
+    ]
+  }
+}

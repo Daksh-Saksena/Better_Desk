@@ -39,47 +39,165 @@ def draw_info_panel(img, component, data, organising=False):
     PANEL_W = 320
     h, w = img.shape[:2]
     x = w - PANEL_W
-    cv.rectangle(img,(x, 0),(w, h),PANEL,-1)
-    cv.putText(img,"Selected",(x+15,80),cv.FONT_HERSHEY_SIMPLEX,0.6,WHITE,2)
-    if not component or component not in data:
-        cv.putText(img,"Point at a",(x+20,140),cv.FONT_HERSHEY_SIMPLEX,0.7,WHITE,2)
-        cv.putText(img,"component...",(x+20,170),cv.FONT_HERSHEY_SIMPLEX,0.7,WHITE,2)
 
-        if organising:
-            cv.rectangle(
-                img,
-                (x + 10, h - 55),
-                (w - 10, h - 10),
-                ORANGE,
-                -1
-            )
+    cv.rectangle(img, (x, 0), (w, h), PANEL, -1)
+
+    cv.putText(img, "Selected", (x + 15, 35),
+               cv.FONT_HERSHEY_SIMPLEX, 0.65, WHITE, 2)
+
+    if not component or component not in data:
+        cv.putText(img, "Point at a", (x + 20, 90),
+                   cv.FONT_HERSHEY_SIMPLEX, 0.7, WHITE, 2)
+        cv.putText(img, "component...", (x + 20, 120),
+                   cv.FONT_HERSHEY_SIMPLEX, 0.7, WHITE, 2)
+        return
+
+    c = data[component]
+
+    y = 65
+
+    # ---------------- Name ----------------
+    cv.putText(img,
+               c.get("name", component),
+               (x + 15, y),
+               cv.FONT_HERSHEY_SIMPLEX,
+               0.7,
+               BLUE,
+               2)
+
+    y += 15
+
+    # ---------------- Image ----------------
+    img_path = os.path.join(
+        os.path.dirname(__file__),
+        c.get("image", "")
+    )
+
+    print(img_path)
+    print(os.path.exists(img_path))
+
+    p = cv.imread(img_path)
+    print(p is None)
+
+    if p is not None:
+        print(p.shape)
+
+    IMG_W = 220
+    IMG_H = 150
+
+    p = cv.resize(p, (IMG_W, IMG_H))
+
+    ix = x + (PANEL_W - IMG_W) // 2
+
+    img[y:y+IMG_H, ix:ix+IMG_W] = p
+
+    y += IMG_H + 15
+    # ---------------- Description ----------------
+    desc = c.get("description", "")
+    if desc:
+        cv.putText(img,
+                   desc[:42],
+                   (x + 15, y),
+                   cv.FONT_HERSHEY_SIMPLEX,
+                   0.42,
+                   WHITE,
+                   1)
+
+        y += 22
+
+    # ---------------- Specifications ----------------
+    cv.putText(img,
+               "Specifications",
+               (x + 15, y),
+               cv.FONT_HERSHEY_SIMPLEX,
+               0.52,
+               ORANGE,
+               2)
+
+    y += 22
+
+    for k, v in c.get("specifications", {}).items():
+        if y > h - 120:
+            break
+
+        cv.putText(
+            img,
+            f"{k}: {v}",
+            (x + 15, y),
+            cv.FONT_HERSHEY_SIMPLEX,
+            0.42,
+            WHITE,
+            1
+        )
+
+        y += 18
+
+    # ---------------- Warnings ----------------
+    warnings = c.get("warnings", [])
+
+    if warnings and y < h - 90:
+
+        y += 8
+
+        cv.putText(img,
+                   "Warnings",
+                   (x + 15, y),
+                   cv.FONT_HERSHEY_SIMPLEX,
+                   0.5,
+                   ORANGE,
+                   2)
+
+        y += 20
+
+        for wtxt in warnings:
+
+            if y > h - 70:
+                break
 
             cv.putText(
                 img,
-                "Organising Desk...",
-                (x + 20, h - 22),
+                "• " + wtxt,
+                (x + 20, y),
                 cv.FONT_HERSHEY_SIMPLEX,
-                0.6,
+                0.40,
                 WHITE,
-                2,
-                cv.LINE_AA
+                1
             )
 
-        return
-    c=data[component]
-    y=120
-    cv.putText(img,c.get("name",component),(x+15,y),cv.FONT_HERSHEY_SIMPLEX,0.7,BLUE,2); y+=30
-    cv.putText(img,c.get("description",""),(x+15,y),cv.FONT_HERSHEY_SIMPLEX,0.45,WHITE,1); y+=35
-    for k,v in c.get("specifications",{}).items():
-        if not v: continue
-        cv.putText(img,f"{k}: {v}",(x+15,y),cv.FONT_HERSHEY_SIMPLEX,0.48,WHITE,1)
-        y+=22
-    pin=c.get("pinout","")
-    if pin and os.path.exists(pin):
-        p=cv.imread(pin)
-        if p is not None:
-            p=cv.resize(p,(280,200))
-            img[y:y+200,x+15:x+295]=p
+            y += 18
+
+    # ---------------- Projects ----------------
+    projects = c.get("common_projects", [])
+
+    if projects and y < h - 55:
+
+        y += 5
+
+        cv.putText(img,
+                   "Projects",
+                   (x + 15, y),
+                   cv.FONT_HERSHEY_SIMPLEX,
+                   0.5,
+                   ORANGE,
+                   2)
+
+        y += 20
+
+        for pjt in projects[:3]:
+
+            cv.putText(
+                img,
+                "• " + pjt,
+                (x + 20, y),
+                cv.FONT_HERSHEY_SIMPLEX,
+                0.40,
+                WHITE,
+                1
+            )
+
+            y += 18
+
+    # ---------------- Organising Banner ----------------
     if organising:
         cv.rectangle(
             img,
