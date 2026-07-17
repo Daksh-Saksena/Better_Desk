@@ -60,8 +60,7 @@ def draw_info_panel(img,component,data):
             p=cv.resize(p,(280,200))
             img[y:y+200,x+15:x+295]=p
 
-def draw(frame, detections, hands, connections, selected, components,
-         fps=0, status="AI Ready", bottom="Ready"):
+def draw_dashboard(frame, selected, components, fps=0, status="AI Ready", bottom="Ready"):
 
     PANEL_W = 320
 
@@ -76,10 +75,8 @@ def draw(frame, detections, hands, connections, selected, components,
         value=BG
     )
 
-    # Draw the camera UI on the LEFT only
+    # Draw the camera UI overlays
     draw_top_bar(canvas[:, :w], fps, status)
-    draw_boxes(canvas[:, :w], detections, selected)
-    draw_hand(canvas[:, :w], hands, connections)
     draw_bottom_bar(canvas[:, :w], bottom)
 
     # Draw the info panel on the RIGHT
