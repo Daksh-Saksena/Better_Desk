@@ -12,8 +12,8 @@ import json
 import time
 import ui
 
-idx0 = 0
-idx1 = 2
+idx0 = 2
+idx1 = 0
 c0 = c.VideoCapture(idx0)
 c1 = c.VideoCapture(idx1)
 
@@ -89,21 +89,17 @@ else:
 def save_rot():
     with open(rot_file, 'w') as f: json.dump({'rot0': rot0, 'rot1': rot1}, f)
 
-img_c = 0
-btn_cl = False
-cam_mode = 0
+cam_mode = 1 # Start in Mono mode (Top Camera) for feature development
 prev = time.time()
 
-def m_cb(e, x, y, f, p):
-    global btn_cl
-    if e == c.EVENT_LBUTTONDOWN and 10 <= x <= 160 and 10 <= y <= 60: btn_cl = True
-
-c.namedWindow("BetterDesk")
-c.setMouseCallback("BetterDesk", m_cb)
+c.namedWindow("BetterDesk", c.WINDOW_NORMAL)
 
 while True:
     ok0, r0 = c0.read()
-    ok1, r1 = c1.read()
+    if cam_mode in [0, 2]:
+        ok1, r1 = c1.read()
+    else:
+        ok1, r1 = False, None
     
     if not ok0 or r0 is None:
         r0 = n.zeros((480, 640, 3), dtype=n.uint8)
@@ -190,18 +186,6 @@ while True:
     
     cm = ui.draw_dashboard(cm, selected_component, COMPONENTS, fps, "AI Ready", bottom_str)
 
-    c.rectangle(cm, (10, 10), (160, 60), (0, 0, 255), -1)
-    c.putText(cm, "CAPTURE", (25, 45), c.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
-    c.putText(cm, "Captured: %d" % img_c, (10, 90), c.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
-
-    if btn_cl:
-        if not os.path.exists('calib'): os.makedirs('calib')
-        c.imwrite('calib/t_%d.jpg' % img_c, o0)
-        c.imwrite('calib/s_%d.jpg' % img_c, o1)
-        print("Saved calib images %d" % img_c)
-        img_c += 1
-        btn_cl = False
-
     c.imshow("BetterDesk", cm)
     k = c.waitKey(1) & 0xFF
     if k == ord('q'): break
@@ -209,6 +193,14 @@ while True:
         c0, c1 = c1, c0
         idx0, idx1 = idx1, idx0
     elif k == ord('3'): cam_mode = (cam_mode + 1) % 3
+    elif k == ord('5'):
+        c0.release()
+        idx0 = (idx0 + 1) % 5
+        c0 = c.VideoCapture(idx0)
+    elif k == ord('6'):
+        c1.release()
+        idx1 = (idx1 + 1) % 5
+        c1 = c.VideoCapture(idx1)
     elif k == ord('1'): 
         rot0 = (rot0 + 1) % 4
         save_rot()

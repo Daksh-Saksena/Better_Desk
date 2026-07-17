@@ -40,9 +40,6 @@ def draw_info_panel(img, component, data, organising=False):
     h, w = img.shape[:2]
     x = w - PANEL_W
 
-<<<<<<< HEAD
-def draw_dashboard(frame, selected, components, fps=0, status="AI Ready", bottom="Ready"):
-=======
     cv.rectangle(img, (x, 0), (w, h), PANEL, -1)
 
     cv.putText(img, "Selected", (x + 15, 35),
@@ -76,23 +73,24 @@ def draw_dashboard(frame, selected, components, fps=0, status="AI Ready", bottom
         c.get("image", "")
     )
 
-    print(img_path)
-    print(os.path.exists(img_path))
-
-    p = cv.imread(img_path)
-    print(p is None)
-
-    if p is not None:
-        print(p.shape)
-
     IMG_W = 220
     IMG_H = 150
 
-    p = cv.resize(p, (IMG_W, IMG_H))
+    global _img_cache
+    if '_img_cache' not in globals():
+        _img_cache = {}
 
-    ix = x + (PANEL_W - IMG_W) // 2
+    if img_path not in _img_cache:
+        p = cv.imread(img_path)
+        if p is not None:
+            p = cv.resize(p, (IMG_W, IMG_H))
+        _img_cache[img_path] = p
 
-    img[y:y+IMG_H, ix:ix+IMG_W] = p
+    p = _img_cache.get(img_path)
+
+    if p is not None:
+        ix = x + (PANEL_W - IMG_W) // 2
+        img[y:y+IMG_H, ix:ix+IMG_W] = p
 
     y += IMG_H + 15
     # ---------------- Description ----------------
@@ -221,8 +219,7 @@ def draw_dashboard(frame, selected, components, fps=0, status="AI Ready", bottom
             cv.LINE_AA
         )
 
-def draw(frame,detections,hands,connections,selected,components,fps=0,status="AI Ready",bottom="Ready", organising=False):
->>>>>>> 3c58d7ca19cab6a80b69f79d9afc0a3502835621
+def draw_dashboard(frame, selected, components, fps=0, status="AI Ready", bottom="Ready", organising=False):
 
     PANEL_W = 320
 
