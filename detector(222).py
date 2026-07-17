@@ -23,7 +23,7 @@ o = v.HandLandmarkerOptions(
 )
 d = v.HandLandmarker.create_from_options(o)
 
-with open('components.json','r') as f:
+with open('components_10.json','r') as f:
     COMPONENTS=json.load(f)
     print("Loaded", len(COMPONENTS), "components")
 print(COMPONENTS["esp32"])
@@ -88,6 +88,38 @@ def m_cb(e, x, y, f, p):
 c.namedWindow("Mono")
 c.setMouseCallback("Mono", m_cb)
 
+def fingers_up(hand, handedness):
+    up = []
+
+    # Thumb
+    if handedness == "Right":
+        up.append(hand[4].x < hand[3].x)
+    else:
+        up.append(hand[4].x > hand[3].x)
+
+    # Index
+    up.append(hand[8].y < hand[6].y)
+
+    # Middle
+    up.append(hand[12].y < hand[10].y)
+
+    # Ring
+    up.append(hand[16].y < hand[14].y)
+
+    # Pinky
+    up.append(hand[20].y < hand[18].y)
+
+    return up
+
+organising = False
+last_gesture = 0
+organising_until = 0
+
+peace_sign = [True, True, True, False, False]  
+devil_sign = [True, True, False, False, True]
+yolo_sign = [False, False, False, False, True]
+flip_off_sign = [False, False, True, False, False]
+
 while True:
     ok0, r0 = c0.read()
     
@@ -116,6 +148,22 @@ while True:
     hr0 = d.detect(m.Image(image_format=m.ImageFormat.SRGB, data=r0))
     if hr0.hand_landmarks:
         h0 = hr0.hand_landmarks[0]
+        handedness = hr0.handedness[0][0].category_name
+        f = fingers_up(h0, handedness)
+        if f == peace_sign:
+            now = time.time()
+
+            if now - last_gesture > 2:
+                print("Organising Desk")
+                organising = True
+                organising_until = now + 3      # Show banner for 3 seconds
+                last_gesture = now
+        if f == devil_sign:
+            print("Devil Sign Detected")
+        if f == yolo_sign:
+            print("YOLO Sign Detected")
+        if f == flip_off_sign:
+            print("Flip Off Sign Detected")
         for p1_, p2_ in cn:
             c.line(f0, (int(h0[p1_].x * f0_w), int(h0[p1_].y * f0_h)), (int(h0[p2_].x * f0_w), int(h0[p2_].y * f0_h)), (0, 255, 0), 2)
         for i in [4, 8, 12, 16, 20]:
@@ -135,9 +183,14 @@ while True:
     c.putText(cm, "CAPTURE", (25, 45), c.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
     c.putText(cm, "Captured: %d" % img_c, (10, 90), c.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
 
-    now=time.time()
-    fps=1.0/max(now-prev,1e-6)
-    prev=now
+    now = time.time()
+    fps = 1.0 / max(now - prev, 1e-6)
+    prev = now
+
+    if time.time() > organising_until:
+        organising = False
+    
+
     try:
         cm = ui.draw(
             f0,
@@ -148,7 +201,8 @@ while True:
             COMPONENTS,
             fps,
             "AI Ready",
-            f"Objects: {len(bd0)}"
+            f"Objects: {len(bd0)}",
+            organising
         )
     except Exception as e:
         print(e)
