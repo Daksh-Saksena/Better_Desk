@@ -73,26 +73,23 @@ def draw_info_panel(img, component, data, organising=False):
         c.get("image", "")
     )
 
-    IMG_W = 220
-    IMG_H = 150
-
-    global _img_cache
-    if '_img_cache' not in globals():
-        _img_cache = {}
-
-    if img_path not in _img_cache:
+    p = None
+    if c.get("image"):
         p = cv.imread(img_path)
-        if p is not None:
-            p = cv.resize(p, (IMG_W, IMG_H))
-        _img_cache[img_path] = p
-
-    p = _img_cache.get(img_path)
 
     if p is not None:
-        ix = x + (PANEL_W - IMG_W) // 2
-        img[y:y+IMG_H, ix:ix+IMG_W] = p
+        IMG_W = 220
+        IMG_H = 150
+        try:
+            p = cv.resize(p, (IMG_W, IMG_H))
+            ix = x + (PANEL_W - IMG_W) // 2
+            img[y:y+IMG_H, ix:ix+IMG_W] = p
+            y += IMG_H + 15
+        except Exception:
+            p = None
 
-    y += IMG_H + 15
+    if p is None:
+        y += 20
     # ---------------- Description ----------------
     desc = c.get("description", "")
     if desc:
@@ -219,7 +216,7 @@ def draw_info_panel(img, component, data, organising=False):
             cv.LINE_AA
         )
 
-def draw_dashboard(frame, selected, components, fps=0, status="AI Ready", bottom="Ready", organising=False):
+def draw(frame,detections,hands,connections,selected,components,fps=0,status="AI Ready",bottom="Ready", organising=False):
 
     PANEL_W = 320
 
@@ -234,8 +231,10 @@ def draw_dashboard(frame, selected, components, fps=0, status="AI Ready", bottom
         value=BG
     )
 
-    # Draw the camera UI overlays
+    # Draw the camera UI on the LEFT only
     draw_top_bar(canvas[:, :w], fps, status)
+    draw_boxes(canvas[:, :w], detections, selected)
+    draw_hand(canvas[:, :w], hands, connections)
     draw_bottom_bar(canvas[:, :w], bottom)
 
     # Draw the info panel on the RIGHT

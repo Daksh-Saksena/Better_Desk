@@ -253,5 +253,724 @@
     "related": [
       "esp32"
     ]
+  },
+  "breadboard": {
+    "name": "Solderless Breadboard",
+    "category": "Prototyping",
+    "description": "Reusable board for building temporary circuits without soldering.",
+    "image": "images/breadboard.png",
+    "specifications": {
+      "Rows": "30",
+      "Columns": "10",
+      "Power Rails": "2"
+    },
+    "warnings": [
+      "Not for permanent soldered circuits"
+    ],
+    "aliases": [
+      "breadboard",
+      "protoboard"
+    ],
+    "common_projects": [
+      "Prototype circuits"
+    ],
+    "related": [
+      "jumper wire",
+      "resistor"
+    ]
+  },
+  "jumper wire": {
+    "name": "Jumper Wires",
+    "category": "Wiring",
+    "description": "Flexible wires for connecting breadboard and modules.",
+    "image": "images/jumper_wires.png",
+    "specifications": {
+      "Types": "Male-to-male, male-to-female, female-to-female",
+      "Length": "10-30 cm"
+    },
+    "warnings": [],
+    "aliases": [
+      "jumper_wires",
+      "dupont_cables"
+    ],
+    "common_projects": [
+      "Circuit assembly"
+    ],
+    "related": [
+      "breadboard"
+    ]
+  },
+  "led": {
+    "name": "LED",
+    "category": "Indicator",
+    "description": "Light-emitting diode for visual output.",
+    "image": "images/led.png",
+    "specifications": {
+      "Voltage": "2V-3.3V",
+      "Color": "Various",
+      "Current": "10-20mA"
+    },
+    "warnings": [
+      "Use with current-limiting resistor"
+    ],
+    "aliases": [
+      "led",
+      "light_emitting_diode"
+    ],
+    "common_projects": [
+      "Status indicators"
+    ],
+    "related": [
+      "resistor"
+    ]
+  },
+  "resistor": {
+    "name": "Resistor",
+    "category": "Passive Component",
+    "description": "Component used to limit current and divide voltage.",
+    "image": "images/resistor.png",
+    "specifications": {
+      "Value": "Various",
+      "Tolerance": "1-10%",
+      "Power": "1/4W"
+    },
+    "warnings": [],
+    "aliases": [
+      "resistor"
+    ],
+    "common_projects": [
+      "Current limiting"
+    ],
+    "related": [
+      "led"
+    ]
+  },
+  "capacitor": {
+    "name": "Capacitor",
+    "category": "Passive Component",
+    "description": "Component that stores and releases electrical energy.",
+    "image": "images/capacitor.png",
+    "specifications": {
+      "Type": "Electrolytic/Ceramic",
+      "Voltage": "Various",
+      "Capacitance": "pF to mF"
+    },
+    "warnings": [
+      "Observe polarity on electrolytic capacitors"
+    ],
+    "aliases": [
+      "capacitor"
+    ],
+    "common_projects": [
+      "Power smoothing"
+    ],
+    "related": [
+      "voltage_converter"
+    ]
+  },
+  "button": {
+    "name": "Push Button",
+    "category": "Input",
+    "description": "Momentary switch for user input.",
+    "image": "images/push_button.png",
+    "specifications": {
+      "Type": "Momentary",
+      "Voltage": "3-12V",
+      "Mount": "PCB/Breadboard"
+    },
+    "warnings": [],
+    "aliases": [
+      "push_button",
+      "tactile_switch"
+    ],
+    "common_projects": [
+      "User controls"
+    ],
+    "related": [
+      "switch"
+    ]
+  },
+  "potentiometer": {
+    "name": "Potentiometer",
+    "category": "Input",
+    "description": "Adjustable resistor used to vary voltage or signal level.",
+    "image": "images/potentiometer.png",
+    "specifications": {
+      "Resistance": "10kΩ",
+      "Type": "Rotary",
+      "Tolerance": "20%"
+    },
+    "warnings": [],
+    "aliases": [
+      "potentiometer",
+      "pot"
+    ],
+    "common_projects": [
+      "Analog control"
+    ],
+    "related": [
+      "adc"
+    ]
+  },
+  "relai": {
+    "name": "Relay Module",
+    "category": "Switching",
+    "description": "Electromechanical switch controlled by a low-voltage signal.",
+    "image": "images/relay_module.png",
+    "specifications": {
+      "Coil Voltage": "5V",
+      "Contact Rating": "10A",
+      "Channels": "1"
+    },
+    "warnings": [
+      "Keep mains wiring isolated from logic circuits"
+    ],
+    "aliases": [
+      "relay_module",
+      "relay"
+    ],
+    "common_projects": [
+      "Home automation"
+    ],
+    "related": [
+      "arduino_uno"
+    ]
+  },
+  "h_bridge": {
+    "name": "H-Bridge Motor Driver",
+    "category": "Motor Control",
+    "description": "Driver module for controlling DC motors in both directions.",
+    "image": "images/h_bridge_motor_driver.png",
+    "specifications": {
+      "Voltage": "5-12V",
+      "Current": "2A per channel",
+      "Control": "Digital"
+    },
+    "warnings": [
+      "Do not exceed current limits"
+    ],
+    "aliases": [
+      "h_bridge_motor_driver",
+      "l298n"
+    ],
+    "common_projects": [
+      "Motor control"
+    ],
+    "related": [
+      "dc_motor"
+    ]
+  },
+  "stepper_motor": {
+    "name": "Stepper Motor",
+    "category": "Actuator",
+    "description": "Motor that moves in discrete steps for precise positioning.",
+    "image": "images/stepper_motor.png",
+    "specifications": {
+      "Voltage": "12V",
+      "Steps": "200",
+      "Current": "1A"
+    },
+    "warnings": [
+      "Use a dedicated driver"
+    ],
+    "aliases": [
+      "stepper_motor"
+    ],
+    "common_projects": [
+      "CNC", "Robotics"
+    ],
+    "related": [
+      "stepper_driver"
+    ]
+  },
+  "stepper_driver": {
+    "name": "Stepper Driver",
+    "category": "Motor Control",
+    "description": "Driver module for controlling stepper motors.",
+    "image": "images/stepper_driver.png",
+    "specifications": {
+      "Voltage": "5-35V",
+      "Current": "2A per phase",
+      "Type": "Microstepping"
+    },
+    "warnings": [
+      "Set current limit before use"
+    ],
+    "aliases": [
+      "stepper_driver",
+      "drv8825"
+    ],
+    "common_projects": [
+      "Precision motion"
+    ],
+    "related": [
+      "stepper_motor"
+    ]
+  },
+  "dc_motor": {
+    "name": "DC Motor",
+    "category": "Actuator",
+    "description": "Direct-current motor for basic rotation applications.",
+    "image": "images/dc_motor.png",
+    "specifications": {
+      "Voltage": "6-12V",
+      "Current": "0.5-2A",
+      "RPM": "3000"
+    },
+    "warnings": [
+      "Requires driver for direction control"
+    ],
+    "aliases": [
+      "dc_motor"
+    ],
+    "common_projects": [
+      "Robotics"
+    ],
+    "related": [
+      "h_bridge"
+    ]
+  },
+  "BLDC": {
+    "name": "BLDC Motor",
+    "category": "Actuator",
+    "description": "Brushless DC motor for efficient, high-speed applications.",
+    "image": "images/bldc_motor.png",
+    "specifications": {
+      "Voltage": "12-24V",
+      "Type": "Brushless",
+      "Power": "20W"
+    },
+    "warnings": [
+      "Requires dedicated ESC controller"
+    ],
+    "aliases": [
+      "bldc_motor",
+      "brushless_motor"
+    ],
+    "common_projects": [
+      "Drones"
+    ],
+    "related": [
+      "power_module"
+    ]
+  },
+  "dht": {
+    "name": "DHT11/DHT22",
+    "category": "Sensor",
+    "description": "Temperature and humidity sensor module.",
+    "image": "images/dht_sensor.png",
+    "specifications": {
+      "Interface": "Digital",
+      "Temperature Range": "0-50°C",
+      "Humidity Range": "20-90%"
+    },
+    "warnings": [
+      "Do not expose to moisture"
+    ],
+    "aliases": [
+      "dht11",
+      "dht22"
+    ],
+    "common_projects": [
+      "Weather station"
+    ],
+    "related": [
+      "arduino_uno"
+    ]
+  },
+  "pir": {
+    "name": "PIR Motion Sensor",
+    "category": "Sensor",
+    "description": "Passive infrared sensor for detecting motion.",
+    "image": "images/pir_motion_sensor.png",
+    "specifications": {
+      "Voltage": "5V",
+      "Range": "7m",
+      "Interface": "Digital"
+    },
+    "warnings": [
+      "Avoid direct sunlight"
+    ],
+    "aliases": [
+      "pir_motion_sensor",
+      "pir_sensor"
+    ],
+    "common_projects": [
+      "Security"
+    ],
+    "related": [
+      "arduino_uno"
+    ]
+  },
+  "flame_sensor": {
+    "name": "Flame Sensor",
+    "category": "Sensor",
+    "description": "Analog/digital sensor for detecting flame or fire.",
+    "image": "images/flame_sensor.png",
+    "specifications": {
+      "Voltage": "3.3-5V",
+      "Interface": "Analog/Digital",
+      "Wavelength": "760-1100nm"
+    },
+    "warnings": [
+      "Do not expose to direct flame"
+    ],
+    "aliases": [
+      "flame_sensor"
+    ],
+    "common_projects": [
+      "Fire detection"
+    ],
+    "related": [
+      "gaz"
+    ]
+  },
+  "gaz": {
+    "name": "Gas Sensor",
+    "category": "Sensor",
+    "description": "Sensor module for detecting gases like LPG, CO, and methane.",
+    "image": "images/gas_sensor.png",
+    "specifications": {
+      "Voltage": "5V",
+      "Interface": "Analog",
+      "Detection": "LPG/CO/CH4"
+    },
+    "warnings": [
+      "Allow warm-up time"
+    ],
+    "aliases": [
+      "gas_sensor",
+      "mq2"
+    ],
+    "common_projects": [
+      "Air quality"
+    ],
+    "related": [
+      "arduino_uno"
+    ]
+  },
+  "ldr": {
+    "name": "LDR",
+    "category": "Sensor",
+    "description": "Light-dependent resistor for measuring ambient light.",
+    "image": "images/ldr.png",
+    "specifications": {
+      "Resistance": "10kΩ in light",
+      "Type": "Photoresistor"
+    },
+    "warnings": [],
+    "aliases": [
+      "ldr",
+      "photoresistor"
+    ],
+    "common_projects": [
+      "Light sensing"
+    ],
+    "related": [
+      "analog_input"
+    ]
+  },
+  "joystick": {
+    "name": "Joystick Module",
+    "category": "Input",
+    "description": "Two-axis analog joystick with push button.",
+    "image": "images/joystick_module.png",
+    "specifications": {
+      "Voltage": "5V",
+      "Axes": "X/Y",
+      "Button": "Yes"
+    },
+    "warnings": [],
+    "aliases": [
+      "joystick_module",
+      "analog_joystick"
+    ],
+    "common_projects": [
+      "Remote control"
+    ],
+    "related": [
+      "arduino_uno"
+    ]
+  },
+  "lcd_oled": {
+    "name": "OLED Display",
+    "category": "Display",
+    "description": "Small OLED module for text and graphics.",
+    "image": "images/oled_display.png",
+    "specifications": {
+      "Resolution": "128x64",
+      "Interface": "I2C/SPI",
+      "Voltage": "3.3V"
+    },
+    "warnings": [
+      "Use 3.3V logic"
+    ],
+    "aliases": [
+      "oled_display",
+      "oled"
+    ],
+    "common_projects": [
+      "Dashboards"
+    ],
+    "related": [
+      "esp32"
+    ]
+  },
+  "keypad": {
+    "name": "Keypad",
+    "category": "Input",
+    "description": "Matrix keypad for numeric input.",
+    "image": "images/keypad.png",
+    "specifications": {
+      "Layout": "4x4",
+      "Interface": "Digital"
+    },
+    "warnings": [],
+    "aliases": [
+      "keypad"
+    ],
+    "common_projects": [
+      "Security systems"
+    ],
+    "related": [
+      "arduino_uno"
+    ]
+  },
+  "bluetooth": {
+    "name": "Bluetooth Module HC-05/HC-06",
+    "category": "Communication",
+    "description": "Serial Bluetooth module for wireless communication.",
+    "image": "images/bluetooth_module.png",
+    "specifications": {
+      "Voltage": "3.3-5V",
+      "Interface": "UART",
+      "Profiles": "SPP"
+    },
+    "warnings": [
+      "Use 3.3V TX/RX logic"
+    ],
+    "aliases": [
+      "bluetooth_module",
+      "hc-05",
+      "hc-06"
+    ],
+    "common_projects": [
+      "Wireless control"
+    ],
+    "related": [
+      "esp32"
+    ]
+  },
+  "gps": {
+    "name": "GPS Module NEO-6M",
+    "category": "Sensor",
+    "description": "GPS receiver module for location tracking.",
+    "image": "images/gps_module.png",
+    "specifications": {
+      "Voltage": "3.3-5V",
+      "Interface": "UART",
+      "Channels": "50"
+    },
+    "warnings": [
+      "Requires clear sky view"
+    ],
+    "aliases": [
+      "gps_module",
+      "neo-6m"
+    ],
+    "common_projects": [
+      "Navigation"
+    ],
+    "related": [
+      "arduino_uno"
+    ]
+  },
+  "camera": {
+    "name": "Camera Module",
+    "category": "Sensor",
+    "description": "Image capture module for video and photography.",
+    "image": "images/camera_module.png",
+    "specifications": {
+      "Resolution": "2MP",
+      "Interface": "CSI/SPI",
+      "Voltage": "3.3V"
+    },
+    "warnings": [
+      "Use correct interface voltage"
+    ],
+    "aliases": [
+      "camera_module"
+    ],
+    "common_projects": [
+      "Vision"
+    ],
+    "related": [
+      "raspberry_pi"
+    ]
+  },
+  "power_module": {
+    "name": "Power Supply Module",
+    "category": "Power",
+    "description": "Regulated power supply board for breadboards and prototypes.",
+    "image": "images/power_supply_module.png",
+    "specifications": {
+      "Output": "3.3V/5V",
+      "Input": "6-12V",
+      "Mount": "Breadboard"
+    },
+    "warnings": [
+      "Do not exceed input voltage limits"
+    ],
+    "aliases": [
+      "power_supply_module",
+      "breadboard_power"
+    ],
+    "common_projects": [
+      "Prototyping"
+    ],
+    "related": [
+      "breadboard"
+    ]
+  },
+  "lipo": {
+    "name": "LiPo Battery",
+    "category": "Power",
+    "description": "Lithium polymer rechargeable battery pack.",
+    "image": "images/lipo_battery.png",
+    "specifications": {
+      "Voltage": "3.7V",
+      "Capacity": "1000-5000mAh",
+      "Type": "LiPo"
+    },
+    "warnings": [
+      "Charge with a proper LiPo charger"
+    ],
+    "aliases": [
+      "lipo_battery",
+      "li_poly"
+    ],
+    "common_projects": [
+      "Portable power"
+    ],
+    "related": [
+      "power_module"
+    ]
+  },
+  "voltage_converter": {
+    "name": "Voltage Converter",
+    "category": "Power",
+    "description": "Module for stepping voltage up or down.",
+    "image": "images/voltage_converter.png",
+    "specifications": {
+      "Type": "Buck/Boost",
+      "Input": "3.3-12V",
+      "Output": "Adjustable"
+    },
+    "warnings": [
+      "Verify output before connecting loads"
+    ],
+    "aliases": [
+      "voltage_converter",
+      "buck_converter",
+      "boost_converter"
+    ],
+    "common_projects": [
+      "Power regulation"
+    ],
+    "related": [
+      "power_module"
+    ]
+  },
+  "battery_9v": {
+    "name": "9V Battery",
+    "category": "Power",
+    "description": "Standard 9V battery for low-power circuits.",
+    "image": "images/9v_battery.png",
+    "specifications": {
+      "Voltage": "9V",
+      "Chemistry": "Alkaline/Rechargeable",
+      "Capacity": "400-600mAh"
+    },
+    "warnings": [
+      "Remove when not in use"
+    ],
+    "aliases": [
+      "9v_battery",
+      "battery_9v"
+    ],
+    "common_projects": [
+      "Portable electronics"
+    ],
+    "related": [
+      "power_module"
+    ]
+  },
+  "prototype_pcb": {
+    "name": "Prototype PCB",
+    "category": "Prototyping",
+    "description": "Perforated PCB for soldering custom prototype circuits.",
+    "image": "images/prototype_pcb.png",
+    "specifications": {
+      "Material": "FR-4",
+      "Hole Spacing": "2.54mm",
+      "Size": "Varies"
+    },
+    "warnings": [
+      "Use proper soldering techniques"
+    ],
+    "aliases": [
+      "prototype_pcb",
+      "perfboard"
+    ],
+    "common_projects": [
+      "Prototype assembly"
+    ],
+    "related": [
+      "soldering"
+    ]
+  },
+  "switch": {
+    "name": "Switch",
+    "category": "Input",
+    "description": "General-purpose switch for turning circuits on and off.",
+    "image": "images/switch.png",
+    "specifications": {
+      "Type": "SPST",
+      "Voltage": "3-12V",
+      "Mount": "Panel/Breadboard"
+    },
+    "warnings": [],
+    "aliases": [
+      "switch"
+    ],
+    "common_projects": [
+      "Power control"
+    ],
+    "related": [
+      "button"
+    ]
+  },
+  "buzzer": {
+    "name": "Buzzer",
+    "category": "Actuator",
+    "description": "Audio output device for tones and alarms.",
+    "image": "images/buzzer.png",
+    "specifications": {
+      "Voltage": "3-5V",
+      "Type": "Piezo",
+      "Sound": "Beep"
+    },
+    "warnings": [
+      "Use a current-limited driver"
+    ],
+    "aliases": [
+      "buzzer"
+    ],
+    "common_projects": [
+      "Alarms"
+    ],
+    "related": [
+      "arduino_uno"
+    ]
   }
 }
