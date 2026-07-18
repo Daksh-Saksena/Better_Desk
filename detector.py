@@ -11,9 +11,11 @@ import os
 import json
 import time
 import ui
+import voice_agent
+import subprocess
 
-idx0 = 2
-idx1 = 0
+idx0 = 0
+idx1 = 2
 c0 = c.VideoCapture(idx0)
 c1 = c.VideoCapture(idx1)
 
@@ -33,7 +35,7 @@ o = v.HandLandmarkerOptions(
 d = v.HandLandmarker.create_from_options(o)
 cn = [(0,1),(1,2),(2,3),(3,4),(0,5),(5,6),(6,7),(7,8),(5,9),(9,10),(10,11),(11,12),(9,13),(13,14),(14,15),(15,16),(13,17),(17,18),(18,19),(19,20),(0,17)]
 
-with open('components.json','r') as f:
+with open('components_10.json','r') as f:
     COMPONENTS=json.load(f)
 
 bd0 = []
@@ -89,8 +91,34 @@ else:
 def save_rot():
     with open(rot_file, 'w') as f: json.dump({'rot0': rot0, 'rot1': rot1}, f)
 
-cam_mode = 1 # Start in Mono mode (Top Camera) for feature development
+cam_mode = 1
 prev = time.time()
+ai_status = "AI Ready"
+ai_busy = False
+is_recording_v = False
+is_recording_t = False
+rec_proc = None
+
+def fingers_up(hand, handedness):
+    up = []
+    # Thumb
+    if handedness == "Right": up.append(hand[4].x < hand[3].x)
+    else: up.append(hand[4].x > hand[3].x)
+    # Index, Middle, Ring, Pinky
+    up.append(hand[8].y < hand[6].y)
+    up.append(hand[12].y < hand[10].y)
+    up.append(hand[16].y < hand[14].y)
+    up.append(hand[20].y < hand[18].y)
+    return up
+
+organising = False
+last_gesture = 0
+organising_until = 0
+
+peace_sign = [True, True, True, False, False]  
+devil_sign = [True, True, False, False, True]
+yolo_sign = [False, False, False, False, True]
+flip_off_sign = [False, False, True, False, False]
 
 c.namedWindow("BetterDesk", c.WINDOW_NORMAL)
 
@@ -137,6 +165,19 @@ while True:
         hr0 = d.detect(m.Image(image_format=m.ImageFormat.SRGB, data=r0_rgb))
         if hr0.hand_landmarks:
             h0 = hr0.hand_landmarks[0]
+            handedness = hr0.handedness[0][0].category_name
+            f_up = fingers_up(h0, handedness)
+            
+            if f_up == peace_sign:
+                now = time.time()
+                if now - last_gesture > 2:
+                    print("Peace Sign -> Organising Desk")
+                    organising = True
+                    organising_until = now + 3
+                    last_gesture = now
+            elif f_up == devil_sign:
+                pass
+            
             ui.draw_hand(f0, [h0], cn)
             pt0 = (int(h0[8].x * f0_w), int(h0[8].y * f0_h))
             
@@ -182,13 +223,63 @@ while True:
     fps = 1.0 / max(now - prev, 1e-6)
     prev = now
     
-    bottom_str = f"3D Coord: X={lx:.1f} Y={ly:.1f} Z={lz:.1f}" if lx else "Ready"
+    if time.time() > organising_until:
+        organising = False
     
-    cm = ui.draw_dashboard(cm, selected_component, COMPONENTS, fps, "AI Ready", bottom_str)
+    bottom_str = f"3D Coord: X={lx:.1f} Y={ly:.1f} Z={lz:.1f}" if lx else "Ready"
+    cm = ui.draw_dashboard(cm, selected_component, COMPONENTS, fps, ai_status, bottom_str, organising)
+
+    if is_recording_v or is_recording_t:
+        _h, _w = cm.shape[:2]
+        c.circle(cm, (_w - 190, 25), 8, (0, 0, 255), -1)
+        c.putText(cm, "RECORDING MIC", (_w - 170, 30), c.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
 
     c.imshow("BetterDesk", cm)
     k = c.waitKey(1) & 0xFF
     if k == ord('q'): break
+    elif k == ord(' '):
+        if not ai_busy and not is_recording_v and not is_recording_t:
+            snap = cm.copy()
+            ai_busy = True
+            ai_status = "Analysing..."
+            def _done(txt):
+                global ai_busy, ai_status
+                ai_busy = False
+                ai_status = "AI Ready"
+            voice_agent.analyse_and_speak(frame_bgr=snap, audio_file=None, on_done=_done)
+    elif k == ord('v'):
+        if not is_recording_v and not ai_busy:
+            is_recording_v = True
+            rec_proc = subprocess.Popen(["rec", "-r", "16000", "-c", "1", "-b", "16", "temp.wav", "-q"])
+        elif is_recording_v:
+            is_recording_v = False
+            if rec_proc:
+                rec_proc.terminate()
+                rec_proc.wait()
+            snap = cm.copy()
+            ai_busy = True
+            ai_status = "Analysing..."
+            def _done(txt):
+                global ai_busy, ai_status
+                ai_busy = False
+                ai_status = "AI Ready"
+            voice_agent.analyse_and_speak(frame_bgr=snap, audio_file="temp.wav", on_done=_done)
+    elif k == ord('t'):
+        if not is_recording_t and not ai_busy:
+            is_recording_t = True
+            rec_proc = subprocess.Popen(["rec", "-r", "16000", "-c", "1", "-b", "16", "temp.wav", "-q"])
+        elif is_recording_t:
+            is_recording_t = False
+            if rec_proc:
+                rec_proc.terminate()
+                rec_proc.wait()
+            ai_busy = True
+            ai_status = "Analysing..."
+            def _done(txt):
+                global ai_busy, ai_status
+                ai_busy = False
+                ai_status = "AI Ready"
+            voice_agent.analyse_and_speak(frame_bgr=None, audio_file="temp.wav", on_done=_done)
     elif k == ord('4'): 
         c0, c1 = c1, c0
         idx0, idx1 = idx1, idx0
