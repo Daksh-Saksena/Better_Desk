@@ -1,12 +1,1 @@
-ENH12864Z-1 VER3.0 (your numbering)
-Pin	Function
-1	+5V
-2	LCD_MOSI
-3	LCD_SCK
-4	LCD_CS0
-5	Encoder Button
-6	GND
-7	LCD_CS
-8	Encoder B
-9	Encoder A
-10	Buzzer
+BetterDesk is an AI powered interactive workbench that can see , understand and physically interact with the objects placed on it. Using multiple cameras , projection mapping, voice and gesture controls, custom built programmable motion surface , the desk can organise components, guide users through projects, visualize info directly on the workspace, and create interactive ways to build, learn and prototype. The core innovation is a custom active motion grid that allows objects to move across the desk without robotic arms, turning the workspace itself into an intelligent physical interface! 
