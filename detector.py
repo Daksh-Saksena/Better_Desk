@@ -13,6 +13,70 @@ import time
 import ui
 import voice_agent
 import subprocess
+import shutil
+import wave
+import queue
+
+try:
+    import sounddevice as sd
+    SOUNDDEVICE_AVAILABLE = True
+except ImportError:
+    SOUNDDEVICE_AVAILABLE = False
+
+AUDIO_SAMPLE_RATE = 16000
+AUDIO_CHANNELS = 1
+AUDIO_FILENAME = "temp.wav"
+
+class AudioRecorder:
+    def __init__(self, filename=AUDIO_FILENAME, samplerate=AUDIO_SAMPLE_RATE, channels=AUDIO_CHANNELS):
+        self.filename = filename
+        self.samplerate = samplerate
+        self.channels = channels
+        self.buffer = queue.Queue()
+        self._stop_event = t.Event()
+        self.stream = None
+        self.thread = None
+
+    def _callback(self, indata, frames, time_info, status):
+        if status:
+            print("Audio status:", status)
+        self.buffer.put(indata.copy())
+
+    def _writer(self):
+        with wave.open(self.filename, "wb") as wf:
+            wf.setnchannels(self.channels)
+            wf.setsampwidth(2)
+            wf.setframerate(self.samplerate)
+            while not self._stop_event.is_set() or not self.buffer.empty():
+                try:
+                    data = self.buffer.get(timeout=0.1)
+                except queue.Empty:
+                    continue
+                wf.writeframes(data.tobytes())
+
+    def start(self):
+        if self.thread is not None:
+            return
+        self._stop_event.clear()
+        self.thread = t.Thread(target=self._writer, daemon=True)
+        self.thread.start()
+        self.stream = sd.InputStream(
+            samplerate=self.samplerate,
+            channels=self.channels,
+            dtype="int16",
+            callback=self._callback
+        )
+        self.stream.start()
+
+    def stop(self):
+        if self.stream is not None:
+            self.stream.stop()
+            self.stream.close()
+            self.stream = None
+        self._stop_event.set()
+        if self.thread is not None:
+            self.thread.join()
+            self.thread = None
 
 idx0 = 0
 idx1 = 2
@@ -249,13 +313,23 @@ while True:
             voice_agent.analyse_and_speak(frame_bgr=snap, audio_file=None, on_done=_done)
     elif k == ord('v'):
         if not is_recording_v and not ai_busy:
-            is_recording_v = True
-            rec_proc = subprocess.Popen(["rec", "-r", "16000", "-c", "1", "-b", "16", "temp.wav", "-q"])
+            if shutil.which("rec") is not None:
+                is_recording_v = True
+                rec_proc = subprocess.Popen(["rec", "-r", "16000", "-c", "1", "-b", "16", "temp.wav", "-q"])
+            elif SOUNDDEVICE_AVAILABLE:
+                is_recording_v = True
+                rec_proc = AudioRecorder(AUDIO_FILENAME, AUDIO_SAMPLE_RATE, AUDIO_CHANNELS)
+                rec_proc.start()
+            else:
+                print("ERROR: audio recorder 'rec' not found and sounddevice is unavailable.")
         elif is_recording_v:
             is_recording_v = False
             if rec_proc:
-                rec_proc.terminate()
-                rec_proc.wait()
+                if isinstance(rec_proc, AudioRecorder):
+                    rec_proc.stop()
+                else:
+                    rec_proc.terminate()
+                    rec_proc.wait()
             snap = cm.copy()
             ai_busy = True
             ai_status = "Analysing..."
@@ -266,13 +340,23 @@ while True:
             voice_agent.analyse_and_speak(frame_bgr=snap, audio_file="temp.wav", on_done=_done)
     elif k == ord('t'):
         if not is_recording_t and not ai_busy:
-            is_recording_t = True
-            rec_proc = subprocess.Popen(["rec", "-r", "16000", "-c", "1", "-b", "16", "temp.wav", "-q"])
+            if shutil.which("rec") is not None:
+                is_recording_t = True
+                rec_proc = subprocess.Popen(["rec", "-r", "16000", "-c", "1", "-b", "16", "temp.wav", "-q"])
+            elif SOUNDDEVICE_AVAILABLE:
+                is_recording_t = True
+                rec_proc = AudioRecorder(AUDIO_FILENAME, AUDIO_SAMPLE_RATE, AUDIO_CHANNELS)
+                rec_proc.start()
+            else:
+                print("ERROR: audio recorder 'rec' not found and sounddevice is unavailable.")
         elif is_recording_t:
             is_recording_t = False
             if rec_proc:
-                rec_proc.terminate()
-                rec_proc.wait()
+                if isinstance(rec_proc, AudioRecorder):
+                    rec_proc.stop()
+                else:
+                    rec_proc.terminate()
+                    rec_proc.wait()
             ai_busy = True
             ai_status = "Analysing..."
             def _done(txt):
