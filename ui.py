@@ -239,3 +239,18 @@ def draw_dashboard(frame, selected, components, fps=0, status="AI Ready", bottom
     draw_info_panel(canvas, selected, components, organising)
 
     return canvas
+
+
+def draw_dashboard(frame, selected, components, fps=0, status="AI Ready", bottom="Ready", organising=False):
+    return draw(
+        frame,
+        [],
+        [],
+        [],
+        selected,
+        components,
+        fps=fps,
+        status=status,
+        bottom=bottom,
+        organising=organising
+    )
