@@ -13,6 +13,15 @@ import time
 import ui
 import voice_agent
 import subprocess
+import overlay as ov
+
+ov.start()
+ov.generate_and_display_markers()
+active_box_ids = set()
+
+dict_aruco = c.aruco.getPredefinedDictionary(c.aruco.DICT_4X4_50)
+params_aruco = c.aruco.DetectorParameters()
+detector_aruco = c.aruco.ArucoDetector(dict_aruco, params_aruco)
 
 idx0 = 0
 idx1 = 2
@@ -163,6 +172,44 @@ while True:
     
     if cam_mode in [0, 1]:
         hr0 = d.detect(m.Image(image_format=m.ImageFormat.SRGB, data=r0_rgb))
+        
+        corners, ids, rejected = detector_aruco.detectMarkers(f0)
+        c.aruco.drawDetectedMarkers(f0, corners, ids)
+        
+        H = getattr(ov, 'last_H', None)
+        if ids is not None and len(ids) >= 4:
+            src_pts = []
+            dst_pts = []
+            norm_corners_dict = ov.get_marker_normalized_corners()
+            for i in range(len(ids)):
+                marker_id = ids[i][0]
+                if marker_id in norm_corners_dict:
+                    src_pts.extend(corners[i][0])
+                    dst_pts.extend(norm_corners_dict[marker_id])
+            if len(src_pts) >= 16:
+                src_pts = n.array(src_pts, dtype=n.float32)
+                dst_pts = n.array(dst_pts, dtype=n.float32)
+                new_H, _ = c.findHomography(src_pts, dst_pts)
+                if new_H is not None:
+                    H = new_H
+                    ov.last_H = H
+        
+        new_active = set()
+        if H is not None:
+            for i, (x1, y1, x2, y2, lb, co) in enumerate(bd0):
+                pts = n.array([[[x1, y1]], [[x2, y1]], [[x2, y2]], [[x1, y2]]], dtype=n.float32)
+                dst = c.perspectiveTransform(pts, H)
+                if dst is not None:
+                    nx1, ny1 = float(n.min(dst[:, 0, 0])), float(n.min(dst[:, 0, 1]))
+                    nx2, ny2 = float(n.max(dst[:, 0, 0])), float(n.max(dst[:, 0, 1]))
+                    box_id = f"ar_box_{i}"
+                    new_active.add(box_id)
+                    ov.highlight_bbox((nx1, ny1, nx2, ny2), label=lb, id_=box_id, color="#00ff00", layer=1, animation="pulse")
+        
+        for old_id in active_box_ids - new_active:
+            ov.remove(old_id)
+        active_box_ids = new_active
+
         if hr0.hand_landmarks:
             h0 = hr0.hand_landmarks[0]
             handedness = hr0.handedness[0][0].category_name
@@ -181,6 +228,17 @@ while True:
             ui.draw_hand(f0, [h0], cn)
             pt0 = (int(h0[8].x * f0_w), int(h0[8].y * f0_h))
             
+            # Project the finger onto the iPad if AR is active!
+            if H is not None and pt0:
+                f_pts = n.array([[[pt0[0], pt0[1]]]], dtype=n.float32)
+                f_dst = c.perspectiveTransform(f_pts, H)
+                if f_dst is not None:
+                    fnx, fny = float(f_dst[0][0][0]), float(f_dst[0][0][1])
+                    print(f"[DEBUG AR] Finger projected at X:{fnx:.2f} Y:{fny:.2f}")
+                    ov.draw_crosshair(fnx, fny, size=0.05, id_="ar_finger", color="#00ffff", layer=4, animation="glow", thickness=3)
+            else:
+                ov.remove("ar_finger")
+                
             p_obj = 'None'
             for bx1, by1, bx2, by2, lb, co in bd0:
                 if bx1 <= pt0[0] <= bx2 and by1 <= pt0[1] <= by2:
