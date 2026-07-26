@@ -13,6 +13,7 @@ import time
 import ui
 import voice_agent
 import subprocess
+import overlay as ov
 import shutil
 import wave
 import queue
@@ -78,6 +79,14 @@ class AudioRecorder:
             self.thread.join()
             self.thread = None
 
+ov.start()
+ov.generate_and_display_markers()
+active_box_ids = set()
+
+dict_aruco = c.aruco.getPredefinedDictionary(c.aruco.DICT_4X4_50)
+params_aruco = c.aruco.DetectorParameters()
+detector_aruco = c.aruco.ArucoDetector(dict_aruco, params_aruco)
+
 idx0 = 0
 idx1 = 2
 c0 = c.VideoCapture(idx0)
@@ -94,7 +103,10 @@ except:
 o = v.HandLandmarkerOptions(
     base_options=p.BaseOptions(model_asset_path='hand_landmarker.task'),
     running_mode=v.RunningMode.IMAGE,
-    num_hands=2
+    num_hands=2,
+    min_hand_detection_confidence=0.50,
+    min_hand_presence_confidence=0.50,
+    min_tracking_confidence=0.50
 )
 d = v.HandLandmarker.create_from_options(o)
 cn = [(0,1),(1,2),(2,3),(3,4),(0,5),(5,6),(6,7),(7,8),(5,9),(9,10),(10,11),(11,12),(9,13),(13,14),(14,15),(15,16),(13,17),(17,18),(18,19),(19,20),(0,17)]
@@ -110,34 +122,42 @@ a = True
 
 def wk(cam_id):
     global bd0, bd1
-    s = r.Session()
-    u = 'https://detect.roboflow.com/find-battery-current-vzeoc/2'
-    q = {'api_key': '84aau744LSxt5mDCmfY4'}
+    from ultralytics import YOLO
+    import torch
+    device = 'mps' if torch.backends.mps.is_available() else 'cpu'
+    model = None
+    loaded_path = None
+
     while a:
+        target_path = 'battery_model.pt' if os.path.exists('battery_model.pt') else 'yolo11n.pt'
+        if model is None or loaded_path != target_path:
+            try:
+                print(f"[LOCAL AI CAM {cam_id}] Loading offline model: {target_path} (Device: {device.upper()})...")
+                model = YOLO(target_path)
+                loaded_path = target_path
+            except Exception as e:
+                print(f"[LOCAL AI CAM {cam_id}] Error loading model {target_path}: {e}")
+                time.sleep(2.0)
+                continue
+
         cf = cf0 if cam_id == 0 else cf1
-        if cf is not None:
+        if cf is not None and model is not None:
             try:
                 cs = cf.copy()
-                h, w = cs.shape[:2]
-                sm = c.resize(cs, (320, 240))
-                _, bf = c.imencode('.jpg', sm)
-                b6 = b.b64encode(bf).decode('ascii')
-                rs = s.post(u, params=q, data=b6, headers={'Content-Type': 'application/x-www-form-urlencoded'}, timeout=5).json()
-                ps = rs.get('predictions', [])
+                results = model(cs, imgsz=320, conf=0.30, device=device, verbose=False)[0]
                 nb = []
-                for pr in ps:
-                    if pr['confidence'] > 0.5:
-                        x, y, w_, h_ = pr['x'], pr['y'], pr['width'], pr['height']
-                        x1 = int((x - w_ / 2) * w / 320.0)
-                        y1 = int((y - h_ / 2) * h / 240.0)
-                        x2 = int((x + w_ / 2) * w / 320.0)
-                        y2 = int((y + h_ / 2) * h / 240.0)
-                        nb.append((x1, y1, x2, y2, pr['class'], pr['confidence']))
+                for box in results.boxes:
+                    conf = float(box.conf[0])
+                    if conf > 0.30:
+                        cls_id = int(box.cls[0])
+                        cls_name = model.names[cls_id]
+                        x1, y1, x2, y2 = map(int, box.xyxy[0])
+                        nb.append((x1, y1, x2, y2, cls_name, conf))
                 if cam_id == 0: bd0 = nb
                 else: bd1 = nb
             except Exception as e:
-                pass
-        time.sleep(0.2)
+                print(f"[LOCAL AI EXCEPTION CAM {cam_id}]: {e}")
+        time.sleep(0.05)
 
 t.Thread(target=wk, args=(0,), daemon=True).start()
 t.Thread(target=wk, args=(1,), daemon=True).start()
@@ -248,6 +268,32 @@ while True:
                 if new_H is not None:
                     H = new_H
                     ov.last_H = H
+                    for i_idx, i_val in enumerate(ids):
+                        if i_val[0] == 0:
+                            ov.anchor_pos = n.mean(corners[i_idx][0], axis=0)
+                            break
+                    if not getattr(ov, 'calibrated_once', False):
+                        ov.calib_counter = getattr(ov, 'calib_counter', 0) + 1
+                        if ov.calib_counter % 15 == 0:
+                            print(f"[AR] Stabilizing calibration... {ov.calib_counter}/45")
+                        if ov.calib_counter >= 45:
+                            ov.hide_calibration_markers(keep_anchor=True)
+                            ov.calibrated_once = True
+                            print("[AR] Calibration complete and locked in! Hiding extra markers.")
+        else:
+            if ids is not None and getattr(ov, 'anchor_pos', None) is not None:
+                for i_idx, i_val in enumerate(ids):
+                    if i_val[0] == 0:
+                        curr_pos = n.mean(corners[i_idx][0], axis=0)
+                        dist = n.linalg.norm(curr_pos - ov.anchor_pos)
+                        if dist > 30:
+                            print(f"[AR] iPad moved (dist={dist:.1f})! Re-displaying calibration markers...")
+                            ov.generate_and_display_markers()
+                            ov.calibrated_once = False
+                            ov.calib_counter = 0
+                            ov.last_H = None
+                            H = None
+                        break
         
         new_active = set()
         if H is not None:
@@ -281,7 +327,11 @@ while True:
                 pass
             
             ui.draw_hand(f0, [h0], cn)
-            pt0 = (int(h0[8].x * f0_w), int(h0[8].y * f0_h))
+            # Extrapolate vector from Index joint 7 (DIP) to 8 (TIP) by 35% to target the exact fingernail!
+            tip_x = h0[8].x + 0.35 * (h0[8].x - h0[7].x)
+            tip_y = h0[8].y + 0.35 * (h0[8].y - h0[7].y)
+            pt0 = (int(tip_x * f0_w), int(tip_y * f0_h))
+            c.circle(f0, pt0, 6, (255, 255, 0), -1)
             
             # Project the finger onto the iPad if AR is active!
             if H is not None and pt0:
@@ -289,7 +339,7 @@ while True:
                 f_dst = c.perspectiveTransform(f_pts, H)
                 if f_dst is not None:
                     fnx, fny = float(f_dst[0][0][0]), float(f_dst[0][0][1])
-                    print(f"[DEBUG AR] Finger projected at X:{fnx:.2f} Y:{fny:.2f}")
+                    print(f"[DEBUG AR] Fingernail projected at X:{fnx:.2f} Y:{fny:.2f}")
                     ov.draw_crosshair(fnx, fny, size=0.05, id_="ar_finger", color="#00ffff", layer=4, animation="glow", thickness=3)
             else:
                 ov.remove("ar_finger")
@@ -304,9 +354,11 @@ while True:
     if cam_mode in [0, 2]:
         hr1 = d.detect(m.Image(image_format=m.ImageFormat.SRGB, data=r1_rgb))
         if hr1.hand_landmarks:
-            h1 = hr1.hand_landmarks[0]
             ui.draw_hand(f1, [h1], cn)
-            pt1 = (int(h1[8].x * f1_w), int(h1[8].y * f1_h))
+            tip_x1 = h1[8].x + 0.35 * (h1[8].x - h1[7].x)
+            tip_y1 = h1[8].y + 0.35 * (h1[8].y - h1[7].y)
+            pt1 = (int(tip_x1 * f1_w), int(tip_y1 * f1_h))
+            c.circle(f1, pt1, 6, (255, 255, 0), -1)
             
             p_obj1 = 'None'
             for bx1, by1, bx2, by2, lb, co in bd1:
@@ -350,6 +402,13 @@ while True:
     c.imshow("BetterDesk", cm)
     k = c.waitKey(1) & 0xFF
     if k == ord('q'): break
+    elif k == ord('k'):
+        print("[AR] Manual re-calibration triggered! Re-displaying calibration markers...")
+        ov.generate_and_display_markers()
+        ov.calibrated_once = False
+        ov.calib_counter = 0
+        ov.last_H = None
+        H = None
     elif k == ord(' '):
         if not ai_busy and not is_recording_v and not is_recording_t:
             snap = cm.copy()

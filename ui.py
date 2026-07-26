@@ -26,14 +26,17 @@ def draw_boxes(img,detections,selected=None):
         cv.rectangle(img,(x1,y1-24),(x1+tw+14,y1),c,-1)
         cv.putText(img,lbl,(x1+7,y1-7),cv.FONT_HERSHEY_SIMPLEX,0.5,(20,20,20),1,cv.LINE_AA)
 
-def draw_hand(img,landmarks,connections):
-    h,w=img.shape[:2]
+def draw_hand(img, landmarks, connections):
+    h, w = img.shape[:2]
+    index_connections = [(0, 5), (5, 6), (6, 7), (7, 8)]
+    index_joints = [0, 5, 6, 7, 8]
     for hl in landmarks:
-        for a,b in connections:
-            p1=hl[a]; p2=hl[b]
-            cv.line(img,(int(p1.x*w),int(p1.y*h)),(int(p2.x*w),int(p2.y*h)),GREEN,2,cv.LINE_AA)
-        for i,p in enumerate(hl):
-            cv.circle(img,(int(p.x*w),int(p.y*h)),4,WHITE,-1)
+        for a, b in index_connections:
+            p1 = hl[a]; p2 = hl[b]
+            cv.line(img, (int(p1.x * w), int(p1.y * h)), (int(p2.x * w), int(p2.y * h)), GREEN, 2, cv.LINE_AA)
+        for idx in index_joints:
+            p = hl[idx]
+            cv.circle(img, (int(p.x * w), int(p.y * h)), 4, WHITE, -1)
 
 def draw_info_panel(img, component, data, organising=False):
     PANEL_W = 320
@@ -240,17 +243,3 @@ def draw_dashboard(frame, selected, components, fps=0, status="AI Ready", bottom
 
     return canvas
 
-
-def draw_dashboard(frame, selected, components, fps=0, status="AI Ready", bottom="Ready", organising=False):
-    return draw(
-        frame,
-        [],
-        [],
-        [],
-        selected,
-        components,
-        fps=fps,
-        status=status,
-        bottom=bottom,
-        organising=organising
-    )

@@ -76,3 +76,10 @@ def get_marker_normalized_corners():
             [nx, ny + SIZE]             # Bottom-Left
         ], dtype=np.float32)
     return corners
+
+def hide_calibration_markers(keep_anchor=True):
+    """Hides markers 1, 2, and 3 after calibration so they don't clutter the iPad screen."""
+    for marker_id in [1, 2, 3]:
+        ov.remove(f"aruco_{marker_id}")
+    if not keep_anchor:
+        ov.remove("aruco_0")

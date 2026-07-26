@@ -4,3 +4,7 @@ __pycache__/
 .DS_Store
 
 .env
+roboflow_ds/
+runs/
+*.wav
+*.mp3
