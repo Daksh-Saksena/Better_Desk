@@ -40,7 +40,7 @@ class AudioRecorder:
 
     def _callback(self, indata, frames, time_info, status):
         if status:
-            print("Audio status:", status)
+            pass
         self.buffer.put(indata.copy())
 
     def _writer(self):
@@ -97,7 +97,7 @@ try:
     p0 = st["P0"]
     p1 = st["P1"]
 except:
-    print("WARNING: stereo.npz not found! 3D tracking disabled.")
+    pass
     p0, p1 = None, None
 
 o = v.HandLandmarkerOptions(
@@ -127,16 +127,36 @@ def wk(cam_id):
     device = 'mps' if torch.backends.mps.is_available() else 'cpu'
     model = None
     loaded_path = None
+    
+    last_gray = None
+    tracks = []
+    
+    def get_iou(bb1, bb2):
+        assert bb1[0] < bb1[2]
+        assert bb1[1] < bb1[3]
+        assert bb2[0] < bb2[2]
+        assert bb2[1] < bb2[3]
+        x_left = max(bb1[0], bb2[0])
+        y_top = max(bb1[1], bb2[1])
+        x_right = min(bb1[2], bb2[2])
+        y_bottom = min(bb1[3], bb2[3])
+        if x_right < x_left or y_bottom < y_top:
+            return 0.0
+        intersection_area = (x_right - x_left) * (y_bottom - y_top)
+        bb1_area = (bb1[2] - bb1[0]) * (bb1[3] - bb1[1])
+        bb2_area = (bb2[2] - bb2[0]) * (bb2[3] - bb2[1])
+        iou = intersection_area / float(bb1_area + bb2_area - intersection_area)
+        return iou
 
     while a:
         target_path = 'battery_model.pt' if os.path.exists('battery_model.pt') else 'yolo11n.pt'
         if model is None or loaded_path != target_path:
             try:
-                print(f"[LOCAL AI CAM {cam_id}] Loading offline model: {target_path} (Device: {device.upper()})...")
+                pass
                 model = YOLO(target_path)
                 loaded_path = target_path
             except Exception as e:
-                print(f"[LOCAL AI CAM {cam_id}] Error loading model {target_path}: {e}")
+                pass
                 time.sleep(2.0)
                 continue
 
@@ -144,19 +164,79 @@ def wk(cam_id):
         if cf is not None and model is not None:
             try:
                 cs = cf.copy()
+                gray = c.cvtColor(cs, c.COLOR_BGR2GRAY)
+                if last_gray is None or last_gray.shape != gray.shape:
+                    last_gray = gray
+                diff = c.absdiff(gray, last_gray)
+                last_gray = gray
+                
                 results = model(cs, imgsz=320, conf=0.30, device=device, verbose=False)[0]
-                nb = []
+                
+                raw_dets = []
                 for box in results.boxes:
                     conf = float(box.conf[0])
                     if conf > 0.30:
                         cls_id = int(box.cls[0])
                         cls_name = model.names[cls_id]
                         x1, y1, x2, y2 = map(int, box.xyxy[0])
-                        nb.append((x1, y1, x2, y2, cls_name, conf))
+                        if cls_name == 'arduino_uno':
+                            cx, cy = (x1 + x2) / 2.0, (y1 + y2) / 2.0
+                            w, h = (x2 - x1) * 0.80, (y2 - y1) * 0.80
+                            x1, x2 = int(cx - w/2), int(cx + w/2)
+                            y1, y2 = int(cy - h/2), int(cy + h/2)
+                        raw_dets.append((x1, y1, x2, y2, cls_name, conf))
+                
+                new_tracks = []
+                for det in raw_dets:
+                    dx1, dy1, dx2, dy2, dcls, dconf = det
+                    best_idx = -1
+                    best_iou = 0.2
+                    for i, t in enumerate(tracks):
+                        if t[4] == dcls:
+                            iou = get_iou((dx1, dy1, dx2, dy2), (t[0], t[1], t[2], t[3]))
+                            if iou > best_iou:
+                                best_iou = iou
+                                best_idx = i
+                    if best_idx >= 0:
+                        t = tracks.pop(best_idx)
+                        dcx, dcy = (dx1 + dx2) / 2.0, (dy1 + dy2) / 2.0
+                        tcx, tcy = (t[0] + t[2]) / 2.0, (t[1] + t[3]) / 2.0
+                        dw, dh = dx2 - dx1, dy2 - dy1
+                        tw, th = t[2] - t[0], t[3] - t[1]
+                        
+                        scx = 0.7 * dcx + 0.3 * tcx
+                        scy = 0.7 * dcy + 0.3 * tcy
+                        
+                        sw = 0.10 * dw + 0.90 * tw
+                        sh = 0.10 * dh + 0.90 * th
+                        
+                        sx1 = int(scx - sw/2)
+                        sy1 = int(scy - sh/2)
+                        sx2 = int(scx + sw/2)
+                        sy2 = int(scy + sh/2)
+                        new_tracks.append((sx1, sy1, sx2, sy2, dcls, dconf, 0))
+                    else:
+                        new_tracks.append((dx1, dy1, dx2, dy2, dcls, dconf, 0))
+                
+                h_img, w_img = cs.shape[:2]
+                for t in tracks:
+                    tx1, ty1 = max(0, t[0]), max(0, t[1])
+                    tx2, ty2 = min(w_img, t[2]), min(h_img, t[3])
+                    motion = 0
+                    if tx2 > tx1 and ty2 > ty1:
+                        motion = diff[ty1:ty2, tx1:tx2].mean()
+                    
+                    age = t[6] + 1
+                    if motion < 15 and age < 100:
+                        new_tracks.append((t[0], t[1], t[2], t[3], t[4], t[5], age))
+                
+                tracks = new_tracks
+                nb = [(t[0], t[1], t[2], t[3], t[4], t[5]) for t in tracks]
+                
                 if cam_id == 0: bd0 = nb
                 else: bd1 = nb
             except Exception as e:
-                print(f"[LOCAL AI EXCEPTION CAM {cam_id}]: {e}")
+                pass
         time.sleep(0.05)
 
 t.Thread(target=wk, args=(0,), daemon=True).start()
@@ -275,11 +355,11 @@ while True:
                     if not getattr(ov, 'calibrated_once', False):
                         ov.calib_counter = getattr(ov, 'calib_counter', 0) + 1
                         if ov.calib_counter % 15 == 0:
-                            print(f"[AR] Stabilizing calibration... {ov.calib_counter}/45")
+                            pass
                         if ov.calib_counter >= 45:
                             ov.hide_calibration_markers(keep_anchor=True)
                             ov.calibrated_once = True
-                            print("[AR] Calibration complete and locked in! Hiding extra markers.")
+                            pass
         else:
             if ids is not None and getattr(ov, 'anchor_pos', None) is not None:
                 for i_idx, i_val in enumerate(ids):
@@ -287,7 +367,7 @@ while True:
                         curr_pos = n.mean(corners[i_idx][0], axis=0)
                         dist = n.linalg.norm(curr_pos - ov.anchor_pos)
                         if dist > 30:
-                            print(f"[AR] iPad moved (dist={dist:.1f})! Re-displaying calibration markers...")
+                            pass
                             ov.generate_and_display_markers()
                             ov.calibrated_once = False
                             ov.calib_counter = 0
@@ -296,9 +376,36 @@ while True:
                         break
         
         new_active = set()
+        
+        target_zone = (350, 150, 500, 300)
+        target_color_hex = "#ff0000"
+        
+        for i, (x1, y1, x2, y2, lb, co) in enumerate(bd0):
+            if lb == 'arduino_uno':
+                cx, cy = (x1 + x2) / 2.0, (y1 + y2) / 2.0
+                if target_zone[0] <= cx <= target_zone[2] and target_zone[1] <= cy <= target_zone[3]:
+                    target_color_hex = "#00ff00"
+                    break
+        
         if H is not None:
+            target_ar_cx = target_ar_cy = None
+            t_pts = n.array([[[target_zone[0], target_zone[1]]], [[target_zone[2], target_zone[1]]], [[target_zone[2], target_zone[3]]], [[target_zone[0], target_zone[3]]]], dtype=n.float32)
+            t_dst = c.perspectiveTransform(t_pts, H)
+            if t_dst is not None:
+                tnx1, tny1 = float(n.min(t_dst[:, 0, 0])), float(n.min(t_dst[:, 0, 1]))
+                tnx2, tny2 = float(n.max(t_dst[:, 0, 0])), float(n.max(t_dst[:, 0, 1]))
+                target_ar_cx, target_ar_cy = (tnx1 + tnx2) / 2.0, (tny1 + tny2) / 2.0
+                new_active.add("ar_target_zone")
+                ov.highlight_bbox((tnx1, tny1, tnx2, tny2), label="Place Arduino Here", id_="ar_target_zone", color=target_color_hex, layer=0, animation="none")
+
             for i, (x1, y1, x2, y2, lb, co) in enumerate(bd0):
-                pts = n.array([[[x1, y1]], [[x2, y1]], [[x2, y2]], [[x1, y2]]], dtype=n.float32)
+                ar_y1, ar_y2 = y1, y2
+                if lb == 'arduino_uno':
+                    y_offset = int((y2 - y1) * 0.18)
+                    ar_y1 += y_offset
+                    ar_y2 += y_offset
+                
+                pts = n.array([[[x1, ar_y1]], [[x2, ar_y1]], [[x2, ar_y2]], [[x1, ar_y2]]], dtype=n.float32)
                 dst = c.perspectiveTransform(pts, H)
                 if dst is not None:
                     nx1, ny1 = float(n.min(dst[:, 0, 0])), float(n.min(dst[:, 0, 1]))
@@ -306,6 +413,11 @@ while True:
                     box_id = f"ar_box_{i}"
                     new_active.add(box_id)
                     ov.highlight_bbox((nx1, ny1, nx2, ny2), label=lb, id_=box_id, color="#00ff00", layer=1, animation="pulse")
+                    
+                    if lb == 'arduino_uno' and target_ar_cx is not None:
+                        acx, acy = (nx1 + nx2) / 2.0, (ny1 + ny2) / 2.0
+                        new_active.add("arduino_guidance_arrow")
+                        ov.draw_arrow((acx, acy), (target_ar_cx, target_ar_cy), id_="arduino_guidance_arrow", color=target_color_hex, layer=2, animation="flow")
         
         for old_id in active_box_ids - new_active:
             ov.remove(old_id)
@@ -319,7 +431,7 @@ while True:
             if f_up == peace_sign:
                 now = time.time()
                 if now - last_gesture > 2:
-                    print("Peace Sign -> Organising Desk")
+                    pass
                     organising = True
                     organising_until = now + 3
                     last_gesture = now
@@ -327,19 +439,17 @@ while True:
                 pass
             
             ui.draw_hand(f0, [h0], cn)
-            # Extrapolate vector from Index joint 7 (DIP) to 8 (TIP) by 35% to target the exact fingernail!
             tip_x = h0[8].x + 0.35 * (h0[8].x - h0[7].x)
             tip_y = h0[8].y + 0.35 * (h0[8].y - h0[7].y)
             pt0 = (int(tip_x * f0_w), int(tip_y * f0_h))
             c.circle(f0, pt0, 6, (255, 255, 0), -1)
-            
-            # Project the finger onto the iPad if AR is active!
+        
             if H is not None and pt0:
                 f_pts = n.array([[[pt0[0], pt0[1]]]], dtype=n.float32)
                 f_dst = c.perspectiveTransform(f_pts, H)
                 if f_dst is not None:
                     fnx, fny = float(f_dst[0][0][0]), float(f_dst[0][0][1])
-                    print(f"[DEBUG AR] Fingernail projected at X:{fnx:.2f} Y:{fny:.2f}")
+                    pass
                     ov.draw_crosshair(fnx, fny, size=0.05, id_="ar_finger", color="#00ffff", layer=4, animation="glow", thickness=3)
             else:
                 ov.remove("ar_finger")
@@ -403,7 +513,7 @@ while True:
     k = c.waitKey(1) & 0xFF
     if k == ord('q'): break
     elif k == ord('k'):
-        print("[AR] Manual re-calibration triggered! Re-displaying calibration markers...")
+        pass
         ov.generate_and_display_markers()
         ov.calibrated_once = False
         ov.calib_counter = 0
@@ -429,7 +539,7 @@ while True:
                 rec_proc = AudioRecorder(AUDIO_FILENAME, AUDIO_SAMPLE_RATE, AUDIO_CHANNELS)
                 rec_proc.start()
             else:
-                print("ERROR: audio recorder 'rec' not found and sounddevice is unavailable.")
+                pass
         elif is_recording_v:
             is_recording_v = False
             if rec_proc:
@@ -456,7 +566,7 @@ while True:
                 rec_proc = AudioRecorder(AUDIO_FILENAME, AUDIO_SAMPLE_RATE, AUDIO_CHANNELS)
                 rec_proc.start()
             else:
-                print("ERROR: audio recorder 'rec' not found and sounddevice is unavailable.")
+                pass
         elif is_recording_t:
             is_recording_t = False
             if rec_proc:
