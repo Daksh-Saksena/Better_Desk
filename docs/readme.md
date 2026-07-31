@@ -81,6 +81,7 @@ Ok so for some basic controls like controlling volume and switching between mode
   <img src="images/software.png" width="45%" />
   <img src="images/software2.png" width="45%" />
 </p>
+
 ---
 
 # Future Plans
