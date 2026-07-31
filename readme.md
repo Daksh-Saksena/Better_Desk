@@ -2,6 +2,8 @@
 
 A workbench that can **see**, **understand** and **physically interact** with everything on your desk.
 
+---
+
 ## What is BetterDesk?
 
 BetterDesk is an interactive workbench designed to make building electronics, robotics, hardware projects, art, etc much easier and more importantly COOLER!
@@ -27,7 +29,9 @@ not that the desk would start flying or whatever jarvis does. But what if it cou
 
 Instead of opening another browser tab, the desk should know what you're building, point at the correct components, organize everything automatically and even move parts around for you.
 
-# OK SO THERE ARE LIKE 4 diff main parts of this
+---
+
+# 4 main parts:
 
 ### 1. The software:
 
@@ -37,27 +41,44 @@ After getting these pics, we trained a big YOLOv11 model on approximately 4000 p
 
 BUT the main thing is since we have the position of the components we can draw bounding boxes around them and then draw boxes arrows and text to where the component should be placed/ already is placed and other instructions. Also i plan to implement a feature such that the AI can look up guides and show part of the website but before that i want the projector working first as it would be much easier to know where/when/how to place the instructions. SO all of this is planned to run on the main raspberry pi 5
 
+---
+
 ### 2. The Projector:
 
 
+---
 
 ### 3. The Desk:
 
 
+---
 
 ### 4. The Control Panel:
 
 Ok so for some basic controls like controlling volume and switching between modes. We are going to build a small control panel which will connect directly to the raspberry pi. Its made up of a touch sensor layer + the LCD screen from my ender3 + arduino uno.
 
+---
+
 # Gallery
+
+---
 
 ## Full CAD Assembly of Desk
 
+---
+
+
 ## Full CAD Assembley of Projector
+
+---
 
 ## FULL Wiring Diagram
 
+---
+
 ## Current Software
+
+---
 
 # Future Plans
 
