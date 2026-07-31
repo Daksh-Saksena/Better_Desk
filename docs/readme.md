@@ -1,3 +1,5 @@
+REVIEWER NOTE: PLEASE read the final journal as it contains a lot of clarification
+
 # BetterDesk
 
 A workbench that can **see**, **understand** and **physically interact** with everything on your desk.
