@@ -86,6 +86,10 @@ Ok so for some basic controls like controlling volume and switching between mode
 
 ---
 
+# Bill Of Materials
+
+---
+
 # Future Plans
 
 Ofc build the full thing in build review but also make software more capable than simply drawing boxes and arrows. But as i mentioned id prefer to do that after the projector is built so i can get a feel of how the instructions will look best
