@@ -83,3 +83,5 @@ Ok so for some basic controls like controlling volume and switching between mode
 # Future Plans
 
 Ofc build the full thing in build review but also make software more capable than simply drawing boxes and arrows. But as i mentioned id prefer to do that after the projector is built so i can get a feel of how the instructions will look best
+
+If You Want to run the code ,in the .env Please put an OpenAi key and a elevenlabs key and then run python src/core/detector.py

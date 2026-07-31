@@ -7,7 +7,7 @@ def main():
     print("="*60)
     print("CONFIGURING LOCAL DATASET PATHS")
     print("="*60)
-    base_dir = os.path.abspath('roboflow_ds')
+    base_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'roboflow_ds')
     yaml_path = os.path.join(base_dir, 'data.yaml')
     with open(yaml_path, 'r') as f:
         data = yaml.safe_load(f)
@@ -20,7 +20,7 @@ def main():
     print("\n" + "="*60)
     print("STARTING LOCAL OFFLINE MODEL TRAINING ON APPLE SILICON GPU")
     print("="*60)
-    model = YOLO('yolo11n.pt')
+    model = YOLO(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'models', 'yolo11n.pt'))
     device = 'mps' if torch.backends.mps.is_available() else 'cpu'
     print(f"Hardware Acceleration Device: {device.upper()}")
     project_dir = os.path.abspath(os.path.join('runs', 'local_battery'))
@@ -39,7 +39,7 @@ def main():
     alt_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'propsoch', 'runs', 'detect', 'runs', 'local_battery', 'train', 'weights', 'best.pt')
     found_path = best_path if os.path.exists(best_path) else (alt_path if os.path.exists(alt_path) else None)
     if found_path:
-        shutil.copy(found_path, 'battery_model.pt')
+        shutil.copy(found_path, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'models', 'battery_model.pt'))
         print("\n" + "="*60)
         print(f"SUCCESS! Model trained and exported from {found_path} to: battery_model.pt")
         print("BetterDesk will now automatically use this offline model at 60 FPS!")

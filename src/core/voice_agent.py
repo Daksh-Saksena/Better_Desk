@@ -22,7 +22,7 @@ try:
     from playsound import playsound
 except Exception:
     playsound = None
-dotenv_path = Path(__file__).resolve().parent / ".env"
+dotenv_path = Path(__file__).resolve().parent.parent.parent / ".env"
 load_dotenv(dotenv_path)
 _client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def _powershell_command(command):

@@ -4,10 +4,6 @@ import threading
 from typing import Optional, Dict, Any, List
 from .websocket import ws_manager
 class OverlayManager:
-    """
-    Manages the scene graph and synchronises state to all connected browsers.
-    Thread-safe — detector.py (sync) can call all methods freely.
-    """
     def __init__(self):
         self._scene: Dict[str, dict] = {}
         self._loop: Optional[asyncio.AbstractEventLoop] = None

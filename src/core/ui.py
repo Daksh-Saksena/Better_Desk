@@ -55,7 +55,7 @@ def draw_info_panel(img, component, data, organising=False):
                2)
     y += 15
     img_path = os.path.join(
-        os.path.dirname(__file__),
+        os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
         c.get("image", "")
     )
     p = None

@@ -39,10 +39,6 @@ def get_local_ip() -> str:
     except Exception:
         return "127.0.0.1"
 def start(host: str = "0.0.0.0", port: int = 8000, daemon: bool = True):
-    """
-    Start the overlay server.
-    If daemon=True (default), runs in a background thread so it doesn't block detector.py.
-    """
     loop = asyncio.new_event_loop()
     overlay.set_loop(loop)
     config = uvicorn.Config(app, host=host, port=port,

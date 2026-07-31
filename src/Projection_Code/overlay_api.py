@@ -1,18 +1,7 @@
-"""
-overlay_api.py
-Public-facing API for the BetterDesk Overlay Engine.
-Import this from detector.py or any other subsystem.
-Usage:
-    from overlay import api as overlay
-    overlay.start()
-    id = overlay.highlight_bbox((0.2, 0.3, 0.5, 0.6), label="Arduino")
-    overlay.draw_text(0.5, 0.1, "Place Motor Here")
-    overlay.remove(id)
-"""
+
 from .overlay_manager import overlay
 from . import server as _server
 def start(port: int = 8000):
-    """Start the overlay WebSocket server in a background thread."""
     _server.start(port=port)
 def clear():
     overlay.clear()
@@ -55,10 +44,6 @@ def draw_dashed_line(x1, y1, x2, y2, dash=None, **kw) -> str:
 def draw_bezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2, **kw) -> str:
     return overlay.draw_bezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2, **kw)
 def highlight_bbox(bbox: tuple, label: str = None, **kw) -> str:
-    """
-    bbox = (x1, y1, x2, y2) in normalized 0-1 coordinates.
-    Draws an animated glowing highlight around the bounding box.
-    """
     return overlay.highlight_bbox(bbox, label=label, **kw)
 def label_bbox(bbox: tuple, text: str, **kw) -> str:
     return overlay.label_bbox(bbox, text, **kw)

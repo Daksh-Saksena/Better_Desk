@@ -13,7 +13,10 @@ import time
 import ui
 import voice_agent
 import subprocess
-import overlay as ov
+import sys, os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, BASE_DIR)
+import src.Projection_Code.overlay_api as ov
 import shutil
 import wave
 import queue
@@ -26,7 +29,7 @@ except ImportError:
 
 AUDIO_SAMPLE_RATE = 16000
 AUDIO_CHANNELS = 1
-AUDIO_FILENAME = "temp.wav"
+AUDIO_FILENAME = os.path.join(BASE_DIR, 'assets', os.path.join(BASE_DIR, 'assets', 'temp.wav'))
 
 class AudioRecorder:
     def __init__(self, filename=AUDIO_FILENAME, samplerate=AUDIO_SAMPLE_RATE, channels=AUDIO_CHANNELS):
@@ -101,7 +104,7 @@ except:
     p0, p1 = None, None
 
 o = v.HandLandmarkerOptions(
-    base_options=p.BaseOptions(model_asset_path='hand_landmarker.task'),
+    base_options=p.BaseOptions(model_asset_path=os.path.join(BASE_DIR, 'models', 'hand_landmarker.task')),
     running_mode=v.RunningMode.IMAGE,
     num_hands=2,
     min_hand_detection_confidence=0.50,
@@ -111,7 +114,7 @@ o = v.HandLandmarkerOptions(
 d = v.HandLandmarker.create_from_options(o)
 cn = [(0,1),(1,2),(2,3),(3,4),(0,5),(5,6),(6,7),(7,8),(5,9),(9,10),(10,11),(11,12),(9,13),(13,14),(14,15),(15,16),(13,17),(17,18),(18,19),(19,20),(0,17)]
 
-with open('components_10.json','r') as f:
+with open(os.path.join(BASE_DIR, 'data', 'components_10.json'),'r') as f:
     COMPONENTS=json.load(f)
 
 bd0 = []
@@ -149,7 +152,7 @@ def wk(cam_id):
         return iou
 
     while a:
-        target_path = 'battery_model.pt' if os.path.exists('battery_model.pt') else 'yolo11n.pt'
+        target_path = os.path.join(BASE_DIR, 'models', 'battery_model.pt') if os.path.exists(os.path.join(BASE_DIR, 'models', 'battery_model.pt')) else os.path.join(BASE_DIR, 'models', 'yolo11n.pt')
         if model is None or loaded_path != target_path:
             try:
                 pass
@@ -242,7 +245,7 @@ def wk(cam_id):
 t.Thread(target=wk, args=(0,), daemon=True).start()
 t.Thread(target=wk, args=(1,), daemon=True).start()
 
-rot_file = 'rot_config.json'
+rot_file = os.path.join(BASE_DIR, 'data', 'rot_config.json')
 if os.path.exists(rot_file):
     with open(rot_file, 'r') as f:
         cfg = json.load(f)
@@ -533,7 +536,7 @@ while True:
         if not is_recording_v and not ai_busy:
             if shutil.which("rec") is not None:
                 is_recording_v = True
-                rec_proc = subprocess.Popen(["rec", "-r", "16000", "-c", "1", "-b", "16", "temp.wav", "-q"])
+                rec_proc = subprocess.Popen(["rec", "-r", "16000", "-c", "1", "-b", "16", os.path.join(BASE_DIR, 'assets', os.path.join(BASE_DIR, 'assets', 'temp.wav')), "-q"])
             elif SOUNDDEVICE_AVAILABLE:
                 is_recording_v = True
                 rec_proc = AudioRecorder(AUDIO_FILENAME, AUDIO_SAMPLE_RATE, AUDIO_CHANNELS)
@@ -555,12 +558,12 @@ while True:
                 global ai_busy, ai_status
                 ai_busy = False
                 ai_status = "AI Ready"
-            voice_agent.analyse_and_speak(frame_bgr=snap, audio_file="temp.wav", on_done=_done)
+            voice_agent.analyse_and_speak(frame_bgr=snap, audio_file=os.path.join(BASE_DIR, 'assets', os.path.join(BASE_DIR, 'assets', 'temp.wav')), on_done=_done)
     elif k == ord('t'):
         if not is_recording_t and not ai_busy:
             if shutil.which("rec") is not None:
                 is_recording_t = True
-                rec_proc = subprocess.Popen(["rec", "-r", "16000", "-c", "1", "-b", "16", "temp.wav", "-q"])
+                rec_proc = subprocess.Popen(["rec", "-r", "16000", "-c", "1", "-b", "16", os.path.join(BASE_DIR, 'assets', os.path.join(BASE_DIR, 'assets', 'temp.wav')), "-q"])
             elif SOUNDDEVICE_AVAILABLE:
                 is_recording_t = True
                 rec_proc = AudioRecorder(AUDIO_FILENAME, AUDIO_SAMPLE_RATE, AUDIO_CHANNELS)
@@ -581,7 +584,7 @@ while True:
                 global ai_busy, ai_status
                 ai_busy = False
                 ai_status = "AI Ready"
-            voice_agent.analyse_and_speak(frame_bgr=None, audio_file="temp.wav", on_done=_done)
+            voice_agent.analyse_and_speak(frame_bgr=None, audio_file=os.path.join(BASE_DIR, 'assets', os.path.join(BASE_DIR, 'assets', 'temp.wav')), on_done=_done)
     elif k == ord('4'): 
         c0, c1 = c1, c0
         idx0, idx1 = idx1, idx0

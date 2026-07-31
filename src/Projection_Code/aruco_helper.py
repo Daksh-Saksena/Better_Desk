@@ -5,7 +5,6 @@ from . import overlay_api as ov
 MARGIN = 0.05
 SIZE = 0.20
 def generate_and_display_markers():
-    """Generates 4 ArUco markers and pushes them to the overlay engine."""
     dict_aruco = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
     MARKER_POSITIONS = {
         0: (MARGIN, MARGIN),               
@@ -29,12 +28,6 @@ def generate_and_display_markers():
             layer=0
         )
 def get_marker_normalized_corners():
-    """
-    Returns the exact normalized (0.0 to 1.0) coordinates of the 4 corners of each marker 
-    on the iPad screen, assuming they were drawn with w=SIZE and h=SIZE.
-    This is used by detector.py as the destination points (dst_pts) for Homography.
-    Returns: Dict[marker_id, np.ndarray(4, 2)]
-    """
     corners = {}
     for marker_id in [0, 1, 2, 3]:
         nx = MARGIN if marker_id in [0, 3] else (1.0 - MARGIN - SIZE)
@@ -47,7 +40,6 @@ def get_marker_normalized_corners():
         ], dtype=np.float32)
     return corners
 def hide_calibration_markers(keep_anchor=True):
-    """Hides markers 1, 2, and 3 after calibration so they don't clutter the iPad screen."""
     for marker_id in [1, 2, 3]:
         ov.remove(f"aruco_{marker_id}")
     if not keep_anchor:
