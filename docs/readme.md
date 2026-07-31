@@ -76,6 +76,8 @@ Ok so for some basic controls like controlling volume and switching between mode
 
 ## FULL Wiring Diagram
 
+![Wiring](images/Wiring.png)
+
 ---
 
 ## Current Software
