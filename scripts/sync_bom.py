@@ -8,19 +8,28 @@ def generate_markdown_table(csv_path):
     try:
         with open(csv_path, mode="r", encoding="utf-8-sig") as file:
             reader = csv.reader(file)
+            header_len = 0
             for i, row in enumerate(reader):
                 if not any(row):
                     continue
-                cleaned_row = [str(cell).strip() for cell in row if cell.strip() != ""]
-                if len(cleaned_row) == 0:
-                    continue
+                cleaned_row = [str(cell).strip() for cell in row]
+                
+                if i == 0:
+                    while len(cleaned_row) > 0 and cleaned_row[-1] == "":
+                        cleaned_row.pop()
+                    header_len = len(cleaned_row)
+                else:
+                    cleaned_row = cleaned_row[:header_len]
+                    while len(cleaned_row) < header_len:
+                        cleaned_row.append("")
+
                 for j in range(len(cleaned_row)):
                     if cleaned_row[j].startswith("http"):
                         cleaned_row[j] = f"[Link]({cleaned_row[j]})"
                 row_str = "| " + " | ".join(cleaned_row) + " |"
                 table.append(row_str)
                 if i == 0:
-                    separator = "| " + " | ".join(["---"] * len(cleaned_row)) + " |"
+                    separator = "| " + " | ".join(["---"] * header_len) + " |"
                     table.append(separator)
         return "\n".join(table)
     except Exception as e:
