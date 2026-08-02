@@ -99,33 +99,33 @@ Ok so for some basic controls like controlling volume and switching between mode
 | Item | Specific part | Unit Price (inr) | Quantity | Total Price | URL | Running Total |
 | --- | --- | --- | --- | --- | --- | --- |
 | Balls | Polypropylene Balls | ₹5.00 | 110 | ₹550.00 | [Link](https://dir.indiamart.com/impcat/polypropylene-balls.html) | ₹550.00 |
-| Belts | GT2 Toothed Belt Rubber Belt 5m | ₹699.00 | 4 | ₹2,796.00 | [Link](https://www.amazon.in/3DINNOVATIONS-Toothed-Abrasion-Resistance-Printers/dp/B09327BB7V?th=1) | ₹3 |
-| Mosfets, Schottky diodes, Resistors | IRFZ44N IRF9540 BC547 | ₹0.00 | 10 | ₹0.00 |  | ₹3 |
-| Motors | NEMA 13 STEPPER (already have from ender) | ₹0.00 | 4 | ₹0.00 |  | "₹3,346.00" |
-| Motor driver | A4988 motor driver with heat sink | ₹699.00 | 1 | ₹699.00 | [Link](https://www.amazon.in/TESTIN-ELECTRONICS-Stepper-Heatsink-Printer/dp/B0GGTFJJT7) | "₹4,045.00" |
-| Pumps | 6V to 12V Mini | ₹89.00 | 23 | ₹2,047.00 | [Link](https://quartzcomponents.com/products/12v-dc-1-2l-min-mini-vacuum-pump?srsltid=AfmBOoq1d-z9DCiYFECv1LNLPBb3ClF3fsWmVBt2qGRkRinZDS05aquH) | "₹6,092.00" |
-| Pressure Sensor | BMP280 | ₹32.00 | 25 | ₹800.00 | [Link](https://www.flyrobo.in/bmp280-barometric-pressure-and-altitude-sensor-i2c-spi-module?srsltid=AfmBOopaK0VeQkgpDOZl1-qdyk8WUkgL2_zQ5x4lKVd9bb6Lktvidx93) | "₹6,892.00" |
-| LED | 50W 32V Natural White SMD COB LED | ₹699.00 | 1 | ₹699.00 | [Link](https://probots.co.in/50w-32v-natural-white-smd-cob-led-rectangle-light.html) | "₹7,591.00" |
-| Cooler | Cooler Master i30 CPU Cooler | ₹655.00 | 1 | ₹655.00 | [Link](https://www.amazon.in/Cooler-Master-i30-CPU-Aluminum/dp/B09V4PN9MX?source=ps-sl-shoppingads-lpcontext&smid=A1A1JBOUJEFFNA&th=1) | "₹8,246.00" |
-| Condensor Lens | High Power LED 20-100W Lens | ₹300.00 | 1 | ₹300.00 | [Link](https://roboman.in/product/high-power-led-20-100w-lamp-bead-lens-44mm-optical-glass-lens-50-mm-reflective-collimator-fixed-bracket-60-120-degree-led-lens/) | "₹8,546.00" |
-| Collector Lens | Convex Lens F20 D100 | ₹300.00 | 1 | ₹300.00 | [Link](https://www.amazon.in/ERH-India-Magnifier-Convex-Length/dp/B09BNTC9F5?source=ps-sl-shoppingads-lpcontext&psc=1&smid=A1KKHARUWH0JG) | "₹8,846.00" |
-| Projector Lens | Convex Lens F10 D75 | ₹270.00 | 1 | ₹270.00 | [Link](https://www.amazon.in/Diameter-75-Science-Experiments-Projects-Microscopes/dp/B0C576XYVT?crid=378DJOR5RDQTX&dib=eyJ2IjoiMSJ9.jJLF1iHCvtPAbifj-IEcJvwmZKhfyjBUhp-5MPEKz8TykW9M1-aSITZ-6le2cAi5KoS2zFdlW54zPszDfxvu-MuEE7ZhdbVp4fCCVVYk7S1i1pGUlJTYhuSBYRYok8GqzpzrfwTCUk5D3NmVbHC-zPPoFq6ldOuNXy05ZWoQ9iwYUq6rrTB9mlPNi2SfBsWO.pA4xyLO7_SKg6Qjny2UQc4vraaFKkMVhhSD85HOlWA4&dib_tag=se&keywords=100+mm+focal+length+biconvex+lens&qid=1782578343&sprefix=100+mm+focal+length+biconvex+le,aps,273&xpid=PNhMk0UkOY3Z4) | "₹9,116.00" |
-| LCD display without backlight | Eshants fart filled tablet | ₹0.00 | 1 | ₹0.00 |  | "₹9,116.00" |
-| LED driver | 50W LED driver | ₹150.00 | 1 | ₹150.00 | [Link](https://makerbazar.in/products/50w-led-driver-1500ma-300ma-750ma) | "₹9,266.00" |
-| 60 pin RGB TTL breakout board | FPC FFC 60 Pin Adapter | ₹101.00 | 1 | ₹101.00 | [Link](https://roboticsdna.in/product/fpc-60pin-cable-pitch-0-5mm-to-dip-pitch-2-54mm-smt-adapter-pcb-board/?srsltid=AfmBOor3ykh8ym4aLEzaiyzvzlYi7wKRnOwV8cFBtz1cFzFLhiNlyNFLD7E) | "₹9,367.00" |
-| Controller of LCD screen | Raspberry Pi 0 | ₹1,299.00 | 1 | ₹1,299.00 | [Link](https://robu.in/product/raspberry-pi-zero-v1-3-development-board/?gad_source=1&gad_campaignid=17416544847&gclid=CjwKCAjwj7HTBhBiEiwA8s35OqpUuB_Rtrcf12BnWGZDf_nnS0EhUMToca90b4wwzxZxcTHOLFYC0xoCoKQQAvD_BwE) | "₹10,666.00" |
-| Stepper Motors | 28BYJ-48 Stepper Motor + ULN2003 Driver | ₹139 | 4 | ₹560 | [Link](https://probots.co.in/28byj-48-stepper-motor-and-uln2003-stepper-motor-driver.html?gad_source=1&gad_campaignid=15283483193&gclid=CjwKCAjwj7HTBhBiEiwA8s35OrzTDwpKqhs8q5qIXjCfNBawpBMg9aN4UWgQbE17EbHu-wku3NBP2hoCDxgQAvD_BwE) | "₹11,226.00" |
-| Control Board for motors | ESP32 | ₹500.00 | 2 | ₹1,000.00 | [Link](https://www.amazon.in/SquadPixel-ESP-32-Bluetooth-Development-Board/dp/B071XP56LM/ref=sr_1_2?crid=1DB18TWXHT64F&dib=eyJ2IjoiMSJ9.7tHski1_or_OvY6xQRgEf-AJs3OUhV7ZdzXc0Obc9YP4kvPpc1oLBq0zUI2L6Bp2U_VBEFeNf9hIrVxYdYFe37K9e0VbkSfFIqD6Y6qCfsuLKl8qhbuVtdeVOSWtOHLXVzhu2JNyNZH3XD5hzKNjKkNla6ZplYY5n4-MmLigt0Ebb92oEwiiH8Z1q0imSLV6gGBSj-8CMLMVlhlh0b4zoU0ahL15BUr0T4PDxCMF5Z_Oq-o4XBN4enprlz70zeRl6wINhQ2hitzAz5Ve_2aCB6IWtbic5sHp5GqzxWZrpX8.1SIQMXip-dlcwOIPKbZg0adfgNB8zQz2CRSgbj2aqoQ&dib_tag=se&keywords=esp32+devkit+v1&qid=1782751207&s=industrial&sprefix=esp32+dev%2Cindustrial%2C314&sr=1-2) | "₹12,226.00" |
-| Main Control Board | Raspberry pi 5 | ₹0.00 | 1 | ₹0.00 |  | "₹12,226.00" |
-| Springs | Stainless Steel Mini Compression Springs | ₹1.00 | 110 | ₹110.00 | [Link](https://www.indiamart.com/proddetail/mini-compression-springs-21559716612.html?utm_medium=prd_ads&utm_campaign=22486366449&utm_ad_group=202576351852&utm_content=product&utm_source=google&gclsrc=aw.ds&gad_source=1&gad_campaignid=22486366449&gclid=Cj0KCQjwr4jSBhCSARIsAOX1E-I4u_rEpNtxYpND3rpCS6pig6dCLbhtsXnaPAd6cAHMuX80MDCoqcYaAj8UEALw_wcB) | "₹12,336.00" |
-| Camera (already have) | Web camera + ipad camera | ₹0.00 | 1 | ₹0.00 |  | "₹12,336.00" |
-| SLA Printing | lots of parts | ₹0.00 | 1 | ₹0.00 |  | "₹12,336.00" |
-| 3D Printing | lots of parts (cost negligible) | ₹0.00 | 1 | ₹0.00 |  | "₹12,336.00" |
-| Control Panel Board | Arduino Uno | ₹0.00 | 1 | ₹0.00 |  | "₹12,336.00" |
-| Control Panel Display | Scrapped from Ender 3 LCD | ₹0.00 | 1 | ₹0.00 |  | "₹12,336.00" |
-| Control Panel Touchscreen | 3.5 inch 4 Wire Resistive Touch Screen Panel | ₹150.00 | 1 | ₹150.00 | [Link](https://kitsguru.com/products/3-5-inch-4-wire-resistive-touch-screen-panel?variant=40708852580533&country=IN&currency=INR.com) | "₹12,486.00" |
-| Control Panel Touch controller | 5767 TSC2046 SPI Resistive Touch | ₹581.00 | 1 | ₹581.00 | [Link](https://www.fabtolab.com/adafruit-5767-tsc2046-spi-resistive-touch-screen-controller) | "₹13,067.00" |
-|  |  |  |  | ₹0.00 |  | "₹13,067.00" |
+| Belts | GT2 Toothed Belt Rubber Belt 5m | ₹699.00 | 4 | ₹2,796.00 | [Link](https://www.amazon.in/3DINNOVATIONS-Toothed-Abrasion-Resistance-Printers/dp/B09327BB7V?th=1) | ₹3,346.00 |
+| Mosfets, Schottky diodes, Resistors | IRFZ44N IRF9540 BC547 (alr have) | ₹0.00 | 10 | ₹0.00 |  | ₹3,346.00 |
+| Motors | NEMA 13 STEPPER (already have from ender) | ₹0.00 | 4 | ₹0.00 |  | ₹3,346.00 |
+| Motor driver | A4988 motor driver with heat sink | ₹699.00 | 1 | ₹699.00 | [Link](https://www.amazon.in/TESTIN-ELECTRONICS-Stepper-Heatsink-Printer/dp/B0GGTFJJT7) | ₹4,045.00 |
+| Pumps | 6V to 12V Mini | ₹89.00 | 23 | ₹2,047.00 | [Link](https://quartzcomponents.com/products/12v-dc-1-2l-min-mini-vacuum-pump?srsltid=AfmBOoq1d-z9DCiYFECv1LNLPBb3ClF3fsWmVBt2qGRkRinZDS05aquH) | ₹6,092.00 |
+| Pressure Sensor | BMP280 | ₹32.00 | 25 | ₹800.00 | [Link](https://www.flyrobo.in/bmp280-barometric-pressure-and-altitude-sensor-i2c-spi-module?srsltid=AfmBOopaK0VeQkgpDOZl1-qdyk8WUkgL2_zQ5x4lKVd9bb6Lktvidx93) | ₹6,892.00 |
+| LED | 50W 32V Natural White SMD COB LED | ₹699.00 | 1 | ₹699.00 | [Link](https://probots.co.in/50w-32v-natural-white-smd-cob-led-rectangle-light.html) | ₹7,591.00 |
+| Cooler | Cooler Master i30 CPU Cooler | ₹655.00 | 1 | ₹655.00 | [Link](https://www.amazon.in/Cooler-Master-i30-CPU-Aluminum/dp/B09V4PN9MX?source=ps-sl-shoppingads-lpcontext&smid=A1A1JBOUJEFFNA&th=1) | ₹8,246.00 |
+| Condensor Lens | High Power LED 20-100W Lens | ₹300.00 | 1 | ₹300.00 | [Link](https://roboman.in/product/high-power-led-20-100w-lamp-bead-lens-44mm-optical-glass-lens-50-mm-reflective-collimator-fixed-bracket-60-120-degree-led-lens/) | ₹8,546.00 |
+| Collector Lens | Convex Lens F20 D100 | ₹300.00 | 1 | ₹300.00 | [Link](https://www.amazon.in/ERH-India-Magnifier-Convex-Length/dp/B09BNTC9F5?source=ps-sl-shoppingads-lpcontext&psc=1&smid=A1KKHARUWH0JG) | ₹8,846.00 |
+| Projector Lens | Convex Lens F10 D75 | ₹270.00 | 1 | ₹270.00 | [Link](https://www.amazon.in/Diameter-75-Science-Experiments-Projects-Microscopes/dp/B0C576XYVT?crid=378DJOR5RDQTX&dib=eyJ2IjoiMSJ9.jJLF1iHCvtPAbifj-IEcJvwmZKhfyjBUhp-5MPEKz8TykW9M1-aSITZ-6le2cAi5KoS2zFdlW54zPszDfxvu-MuEE7ZhdbVp4fCCVVYk7S1i1pGUlJTYhuSBYRYok8GqzpzrfwTCUk5D3NmVbHC-zPPoFq6ldOuNXy05ZWoQ9iwYUq6rrTB9mlPNi2SfBsWO.pA4xyLO7_SKg6Qjny2UQc4vraaFKkMVhhSD85HOlWA4&dib_tag=se&keywords=100+mm+focal+length+biconvex+lens&qid=1782578343&sprefix=100+mm+focal+length+biconvex+le,aps,273&xpid=PNhMk0UkOY3Z4) | ₹9,116.00 |
+| LCD display without backlight | Extracted from eshants tablet | ₹0.00 | 1 | ₹0.00 |  | ₹9,116.00 |
+| LED driver | 50W LED driver | ₹150.00 | 1 | ₹150.00 | [Link](https://makerbazar.in/products/50w-led-driver-1500ma-300ma-750ma) | ₹9,266.00 |
+| 60 pin RGB TTL breakout board | FPC FFC 60 Pin Adapter | ₹101.00 | 1 | ₹101.00 | [Link](https://roboticsdna.in/product/fpc-60pin-cable-pitch-0-5mm-to-dip-pitch-2-54mm-smt-adapter-pcb-board/?srsltid=AfmBOor3ykh8ym4aLEzaiyzvzlYi7wKRnOwV8cFBtz1cFzFLhiNlyNFLD7E) | ₹9,367.00 |
+| Controller of LCD screen | Raspberry Pi 0 | ₹1,299.00 | 1 | ₹1,299.00 | [Link](https://robu.in/product/raspberry-pi-zero-v1-3-development-board/?gad_source=1&gad_campaignid=17416544847&gclid=CjwKCAjwj7HTBhBiEiwA8s35OqpUuB_Rtrcf12BnWGZDf_nnS0EhUMToca90b4wwzxZxcTHOLFYC0xoCoKQQAvD_BwE) | ₹10,666.00 |
+| Stepper Motors | 28BYJ-48 Stepper Motor + ULN2003 Driver | ₹139 | 4 | ₹560.00 | [Link](https://probots.co.in/28byj-48-stepper-motor-and-uln2003-stepper-motor-driver.html?gad_source=1&gad_campaignid=15283483193&gclid=CjwKCAjwj7HTBhBiEiwA8s35OrzTDwpKqhs8q5qIXjCfNBawpBMg9aN4UWgQbE17EbHu-wku3NBP2hoCDxgQAvD_BwE) | ₹11,226.00 |
+| Control Board for motors | ESP32 | ₹500.00 | 2 | ₹1,000.00 | [Link](https://www.amazon.in/SquadPixel-ESP-32-Bluetooth-Development-Board/dp/B071XP56LM/ref=sr_1_2?crid=1DB18TWXHT64F&dib=eyJ2IjoiMSJ9.7tHski1_or_OvY6xQRgEf-AJs3OUhV7ZdzXc0Obc9YP4kvPpc1oLBq0zUI2L6Bp2U_VBEFeNf9hIrVxYdYFe37K9e0VbkSfFIqD6Y6qCfsuLKl8qhbuVtdeVOSWtOHLXVzhu2JNyNZH3XD5hzKNjKkNla6ZplYY5n4-MmLigt0Ebb92oEwiiH8Z1q0imSLV6gGBSj-8CMLMVlhlh0b4zoU0ahL15BUr0T4PDxCMF5Z_Oq-o4XBN4enprlz70zeRl6wINhQ2hitzAz5Ve_2aCB6IWtbic5sHp5GqzxWZrpX8.1SIQMXip-dlcwOIPKbZg0adfgNB8zQz2CRSgbj2aqoQ&dib_tag=se&keywords=esp32+devkit+v1&qid=1782751207&s=industrial&sprefix=esp32+dev%2Cindustrial%2C314&sr=1-2) | ₹12,226.00 |
+| Main Control Board | Raspberry pi 5 (alr have) | ₹0.00 | 1 | ₹0.00 |  | ₹12,226.00 |
+| Springs | Stainless Steel Mini Compression Springs | ₹1.00 | 110 | ₹110.00 | [Link](https://www.indiamart.com/proddetail/mini-compression-springs-21559716612.html?utm_medium=prd_ads&utm_campaign=22486366449&utm_ad_group=202576351852&utm_content=product&utm_source=google&gclsrc=aw.ds&gad_source=1&gad_campaignid=22486366449&gclid=Cj0KCQjwr4jSBhCSARIsAOX1E-I4u_rEpNtxYpND3rpCS6pig6dCLbhtsXnaPAd6cAHMuX80MDCoqcYaAj8UEALw_wcB) | ₹12,336.00 |
+| Camera | Phone camera + ipad camera (already have) | ₹0.00 | 1 | ₹0.00 |  | ₹12,336.00 |
+| SLA Printing | lots of parts | ₹0.00 | 1 | ₹0.00 |  | ₹12,336.00 |
+| 3D Printing | lots of parts (cost negligible) | ₹0.00 | 1 | ₹0.00 |  | ₹12,336.00 |
+| Control Panel Board | Arduino Uno (alr have) | ₹0.00 | 1 | ₹0.00 |  | ₹12,336.00 |
+| Control Panel Display | Scrapped from Ender 3 LCD | ₹0.00 | 1 | ₹0.00 |  | ₹12,336.00 |
+| Control Panel Touchscreen | 3.5 inch 4 Wire Resistive Touch Screen Panel | ₹150.00 | 1 | ₹150.00 | [Link](https://kitsguru.com/products/3-5-inch-4-wire-resistive-touch-screen-panel?variant=40708852580533&country=IN&currency=INR.com) | ₹12,486.00 |
+| Control Panel Touch controller | 5767 TSC2046 SPI Resistive Touch | ₹581.00 | 1 | ₹581.00 | [Link](https://www.fabtolab.com/adafruit-5767-tsc2046-spi-resistive-touch-screen-controller) | ₹13,067.00 |
+|  |  |  |  | ₹0.00 |  | ₹13,067.00 |
 
 <!-- BOM_END -->
 
