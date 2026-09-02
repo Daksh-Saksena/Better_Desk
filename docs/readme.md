@@ -70,11 +70,15 @@ Ok so for some basic controls like controlling volume and switching between mode
 ---
 
 ## Full CAD Assembly of Desk
+<img width="1138" height="498" alt="image" src="https://github.com/user-attachments/assets/e043a775-227b-42c3-b0c2-27c0a6280469" />
 
 ---
 
 
 ## Full CAD Assembley of Projector
+<img width="1912" height="1432" alt="image" src="https://github.com/user-attachments/assets/9c2ddf58-7d94-4004-8763-385ba87c8044" />
+<img width="1041" height="584" alt="image" src="https://github.com/user-attachments/assets/45d071b9-7d33-4abd-8f07-7d5058b6f934" />
+
 
 ---
 
