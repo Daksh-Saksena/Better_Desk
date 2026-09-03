@@ -126,6 +126,7 @@ Current lenses:
 
 - 100 mm diameter, 200 mm focal length collector lens
 - 75 mm diameter, 100 mm focal length projector lens
+- 100mm diameter, 100mm focal length condensor lens
 
 Use the CAD dihmensions for the exact spacing.
 
