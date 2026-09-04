@@ -4,6 +4,9 @@ REVIEWER NOTE: PLEASE read the final journal as it contains a lot of clarificati
 
 A workbench that can **see**, **understand** and **physically interact** with everything on your desk.
 
+- **Latest CAD model:** [https://github.com/eshantsonhar/Betterdesk---cad-model/tree/main](https://github.com/eshantsonhar/Betterdesk---cad-model/tree/main)
+- **CAD Submodule Snapshot:** [`cad_files_and_step`](../cad_files_and_step) *(pinned commit for reproducible builds; auto-synced via GitHub Actions)*
+
 ---
 
 ## What is BetterDesk?
@@ -71,6 +74,11 @@ Ok so for some basic controls like controlling volume and switching between mode
 
 ## Full CAD Assembly of Desk
 <img width="1138" height="498" alt="image" src="https://github.com/user-attachments/assets/e043a775-227b-42c3-b0c2-27c0a6280469" />
+
+> [!TIP]
+> **Latest CAD model:** [https://github.com/eshantsonhar/Betterdesk---cad-model/tree/main](https://github.com/eshantsonhar/Betterdesk---cad-model/tree/main)
+>
+> The repository submodule [`cad_files_and_step`](../cad_files_and_step) points to a pinned commit snapshot for build reproducibility, automatically synchronized with the CAD repository's `main` branch via GitHub Actions. If you are browsing on GitHub and want to access the live, latest CAD files and STEP models, click the link above.
 
 ---
 
