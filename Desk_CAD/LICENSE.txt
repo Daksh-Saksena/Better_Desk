@@ -1,0 +1,16 @@
+﻿Copyright (c) 2026 Eshant Sonhar
+
+The CAD files and original design work contained in this repository are
+licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives
+4.0 International License (CC BY-NC-ND 4.0).
+
+You may view, download, and redistribute unmodified copies of the work for
+non-commercial purposes, provided that appropriate credit is given to
+Eshant Sonhar and a link to the original repository is included.
+
+Commercial use, modification, creation or distribution of derivative works,
+and removal or alteration of attribution or copyright notices are not
+permitted without prior written permission from the copyright holder.
+
+For the full license terms, see:
+https://creativecommons.org/licenses/by-nc-nd/4.0/

@@ -1,0 +1,12 @@
+# Private CAD provenance key
+.provenance-secret.key
+
+# Generated conversion artifacts
+table_stl_to_step/build/
+table_stl_to_step/input_extracted/
+table_stl_to_step/output/
+table_stl_to_step/final_table_1-5m.7z
+
+# OS / IDE files
+.DS_Store
+Thumbs.db
