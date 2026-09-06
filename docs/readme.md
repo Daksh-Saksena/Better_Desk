@@ -3,10 +3,6 @@ REVIEWER NOTE: PLEASE read the final journal as it contains a lot of clarificati
 # BetterDesk
 
 A workbench that can **see**, **understand** and **physically interact** with everything on your desk.
-
-- **Latest CAD model:** [https://github.com/eshantsonhar/Betterdesk---cad-model/tree/main](https://github.com/eshantsonhar/Betterdesk---cad-model/tree/main)
-- **CAD Submodule Snapshot:** [`cad_files_and_step`](../cad_files_and_step) *(pinned commit for reproducible builds; auto-synced via GitHub Actions)*
-
 ---
 
 ## What is BetterDesk?
