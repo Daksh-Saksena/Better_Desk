@@ -30,3 +30,7 @@ Control Panel Board,Arduino Uno (alr have),₹0.00,1,₹0.00,$0.00,,"₹21,087.0
 Control Panel Display,Scrapped from Ender 3 LCD,₹0.00,1,₹0.00,$0.00,,"₹21,087.00",$220.07
 Control Panel Touchscreen,3.5 inch 4 Wire Resistive Touch Screen Panel,₹150.00,1,₹150.00,$1.57,https://kitsguru.com/products/3-5-inch-4-wire-resistive-touch-screen-panel?variant=40708852580533&country=IN&currency=INR.com,"₹21,237.00",$221.64
 Control Panel Touch controller,5767 TSC2046 SPI Resistive Touch,₹581.00,1,₹581.00,$6.06,https://www.fabtolab.com/adafruit-5767-tsc2046-spi-resistive-touch-screen-controller,"₹21,818.00",$227.70
+Boost Converter to power lcd,XL6009 Boost Module,₹63.00,6,₹378.00,$3.94,https://robocraze.com/products/xl6009-boost-module?variant=40192556761241&country=IN&currency=INR&utm_medium=product_sync&utm_source=google&utm_content=sag_organic&utm_campaign=sag_organic,"₹22,196.00",$231.65
+I2C multiplexer,CJMCU TCA9548A I2C 8 Channel Expansion Board,₹94.00,3,₹282.00,$2.94,https://www.flyrobo.in/cjmcu-tca9548a-i2c-8-multi-channel-expansion-board?tracking=ads,"₹22,478.00",$234.59
+Microcontroller board,STM32F407VET6 ARM Cortex-M4 Core Board,"₹2,169.00",1,"₹2,169.00",$22.64,https://robu.in/product/stm32f407vet6-arm-cortex-m4-core/?utm_source=chatgpt.com,"₹24,647.00",$257.23
+Servo driver,PCA9685 16-Channel 12-bit PWM/Servo Driver (I2C),₹350.00,1,₹350.00,$3.65,https://robu.in/product/16-channel-12-bit-pwmservo-driver-i2c-interface-pca9685-arduino-raspberry-pi/,"₹24,997.00",$260.88
