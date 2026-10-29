@@ -62,6 +62,12 @@ The desk movement system is one of the most complex parts of this project. It us
 
 Ok so for some basic controls like controlling volume and switching between modes. We are going to build a small control panel which will connect directly to the raspberry pi. Its made up of a touch sensor layer + the LCD screen from my ender3 + arduino uno.
 
+
+---
+
+# How to assemble?
+First, build the main frame according to the CAD and assemble ONE mechanical cell with the ball, spring, 3D printed parts, tubing and rods. Test that the rod spins properly, the ball moves and the spring returns everything to its original position before building all 100 cells, otherwise ull be left with 100 not working ones so dont slime me out. Then install the NEMA motors, 28BYJ-48 motors, drivers, pumps, pipes and pressure sensors according to the wiring diagram and make sure all the connections are secure. Set up the cameras with ArUco markers for calibration (u can use any 2 cameras, i used an ipad and a phone) , YOLOv11 for object detection and the rest of the software from the repo so we can track objects and project boxes, arrows and instructions onto the workspace. The projector uses a 50W COB LED, condenser lens, tablet LCD, collector lens and projector lens, so cooling is VERY important unless u wanna taste some tasty melted plastic. Add the Arduino Uno touchscreen control panel and use PLA coated with UV resin for airtight parts, but test that idea on a small part first because if it doesn't work CHANGE the resin or the UV light, cus its VERY VERY necessary its airtight. Once everything works individually, connect the full system, calibrate the workspace and test the entire 10x10 grid. There u have it!
+
 ---
 
 # Gallery
